@@ -458,6 +458,73 @@ main{padding:32px 0 80px}
 .toast.show{opacity:1;transform:translate(-50%, 0)}
 
 /* ============================================
+   헤더 내비게이션 (게시판 링크 등)
+   ============================================ */
+.nav-link{
+  color:var(--sub);
+  font-weight:700;
+  font-size:14px;
+  margin-right:8px;
+}
+.nav-link:hover{color:var(--text)}
+
+/* ============================================
+   게시판
+   ============================================ */
+.post-list{
+  display:flex;
+  flex-direction:column;
+  gap:1px;
+  background:var(--border);
+  border:1px solid var(--border);
+  border-radius:12px;
+  overflow:hidden;
+}
+.post-row{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  padding:18px 20px;
+  background:var(--bg);
+  transition:.15s;
+}
+.post-row:hover{background:var(--surface)}
+.post-row .tag{margin-bottom:0;flex-shrink:0}
+.post-row-title{
+  font-size:15px;
+  font-weight:700;
+  color:var(--text);
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+.post-row-date{color:var(--sub);font-size:13px;flex-shrink:0}
+
+.post-main{max-width:760px}
+.post-header{margin-bottom:32px}
+.post-header .tag{margin-bottom:14px}
+.post-title{font-size:28px;line-height:1.35;margin-bottom:10px}
+.post-date{color:var(--sub);font-size:13px}
+.post-body{font-size:15px;line-height:1.8;color:var(--text)}
+.post-body h2{font-size:19px;margin:36px 0 12px}
+.post-body p{margin-bottom:16px}
+.post-body ul,.post-body ol{padding-left:22px;margin-bottom:16px}
+.post-body li{margin-bottom:6px}
+.post-body table{width:100%;border-collapse:collapse;margin:16px 0;font-size:14px}
+.post-body th,.post-body td{border:1px solid var(--border);padding:8px 12px;text-align:left}
+.post-body th{background:var(--surface)}
+.post-back{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  margin-bottom:24px;
+  color:var(--sub);
+  font-size:14px;
+}
+.post-back:hover{color:var(--text)}
+
+/* ============================================
    반응형
    ============================================ */
 @media (max-width:640px){
