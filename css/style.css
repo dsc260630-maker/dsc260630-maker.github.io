@@ -523,6 +523,12 @@ main{padding:32px 0 80px}
   border:1px solid var(--border);
   box-shadow:0 2px 8px rgba(25,25,25,.08);
 }
+.post-figure.post-screenshot img{
+  width:100%;
+  height:auto;
+  max-width:520px;
+  border-radius:12px;
+}
 .post-figure figcaption{color:var(--sub);font-size:12px;margin-top:8px}
 .post-back{
   display:inline-flex;
