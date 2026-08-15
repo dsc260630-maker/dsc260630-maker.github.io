@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422466553554678" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>점프 러너 — DSC GAMES</title>
+<meta name="description" content="자동으로 달리는 캐릭터를 타이밍 좋게 점프시켜 장애물을 피하는 러너 게임.">
+<meta property="og:title" content="점프 러너 — DSC GAMES">
+<meta property="og:description" content="자동으로 달리는 캐릭터를 타이밍 좋게 점프시켜 장애물을 피하는 러너 게임.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2383E2">
+<link rel="canonical" href="https://dsc260630-maker.github.io/play/jump-runner.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232383E2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='6' y1='12' x2='10' y2='12'/%3E%3Cline x1='8' y1='10' x2='8' y2='14'/%3E%3Ccircle cx='16' cy='11' r='1'/%3E%3Ccircle cx='18.5' cy='13.5' r='1'/%3E%3Cpath d='M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "점프 러너",
+  "description": "자동으로 달리는 캐릭터를 타이밍 좋게 점프시켜 장애물을 피하는 러너 게임.",
+  "applicationCategory": "Game",
+  "genre": "액션",
+  "operatingSystem": "Web",
+  "url": "https://dsc260630-maker.github.io/play/jump-runner.html",
+  "publisher": { "@type": "Organization", "name": "DSC GAMES" }
+}
+</script>
+</head>
+<body data-game-id="9" data-file-path="ca471e54-7900-436a-bdf6-06be423d7070/1786678686055_02_jump_runner.html">
+
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <svg class="icon" viewBox="0 0 24 24">
+          <line x1="6" y1="12" x2="10" y2="12"/>
+          <line x1="8" y1="10" x2="8" y2="14"/>
+          <circle cx="16" cy="11" r="1"/>
+          <circle cx="18.5" cy="13.5" r="1"/>
+          <path d="M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z"/>
+        </svg>
+        DSC GAMES
+      </a>
+      <div class="header-actions">
+        <a href="../about.html" class="nav-link">소개</a>
+        <a href="../board/" class="nav-link">게시판</a>
+        <div id="authArea"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container play-page">
+    <a href="../index.html" class="post-back">&larr; 게임 목록으로</a>
+
+    <header class="post-header">
+      <span class="tag">액션</span>
+      <h1 class="post-title">점프 러너</h1>
+    </header>
+
+    <div class="play-stage">
+      <div id="playStartScreen" class="play-start" style="aspect-ratio:480/270">
+        <p class="card-meta" id="playStartScore">불러오는 중...</p>
+        <button type="button" class="btn" id="startGameBtn">시작하기</button>
+      </div>
+      <div id="playLoading" class="play-start" style="aspect-ratio:480/270" hidden>
+        <p class="card-meta">불러오는 중...</p>
+      </div>
+      <iframe id="playFrame" class="play-frame" style="aspect-ratio:480/270" title="게임 화면" hidden
+              sandbox="allow-scripts allow-pointer-lock allow-forms allow-popups"></iframe>
+    </div>
+
+    <article class="post-body play-guide">
+      
+      <p><strong>점프 러너</strong>는 캐릭터가 자동으로 앞으로 달리는 동안, 클릭이나 스페이스바로
+      점프시켜 다가오는 장애물을 피하는 러너 게임입니다. 오래 살아남을수록 점수가 올라갑니다.</p>
+      <h2>기본 규칙</h2>
+      <ul>
+        <li>클릭, 터치, 또는 스페이스바로 캐릭터를 점프시킵니다.</li>
+        <li>장애물에 부딪히면 게임이 종료됩니다.</li>
+        <li>시간이 지날수록 이동 속도가 빨라져 장애물이 더 자주 다가옵니다.</li>
+        <li>생존 시간에 비례해 점수가 오릅니다.</li>
+      </ul>
+      <h2>오래 살아남는 팁</h2>
+      <h3>1. 장애물이 화면에 나타나는 즉시 타이밍을 계산하세요</h3>
+      <p>점프에는 상승과 하강 시간이 있어서, 장애물이 가까이 온 뒤에 반응하면 이미 늦는 경우가
+      많습니다. 장애물이 보이자마자 점프 타이밍을 미리 가늠해두는 습관이 중요합니다.</p>
+      <h3>2. 연속 장애물은 짧게 끊어 점프하세요</h3>
+      <p>장애물이 연달아 나오는 구간에서는 점프를 너무 크게, 오래 유지하면 착지 타이밍이 다음
+      장애물과 겹칩니다. 필요한 만큼만 짧게 점프하는 것이 안전합니다.</p>
+    
+    </article>
+  </main>
+
+  <div id="authModal"></div>
+
+  <footer style="padding:32px 24px;text-align:center;color:var(--sub);font-size:13px">
+    <a href="../index.html" style="color:var(--sub);text-decoration:underline">게임 목록으로</a>
+    &nbsp;·&nbsp;
+    <a href="../board/" style="color:var(--sub);text-decoration:underline">게시판</a>
+    &nbsp;·&nbsp;
+    <a href="../legal.html" style="color:var(--sub);text-decoration:underline">이용약관 및 개인정보처리방침</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/play.js"></script>
+</body>
+</html>

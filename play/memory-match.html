@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422466553554678" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>카드 짝맞추기 — DSC GAMES</title>
+<meta name="description" content="4x4 카드를 뒤집어 같은 그림끼리 짝을 맞추는 기억력 게임. 이동 횟수가 적을수록 고득점.">
+<meta property="og:title" content="카드 짝맞추기 — DSC GAMES">
+<meta property="og:description" content="4x4 카드를 뒤집어 같은 그림끼리 짝을 맞추는 기억력 게임. 이동 횟수가 적을수록 고득점.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2383E2">
+<link rel="canonical" href="https://dsc260630-maker.github.io/play/memory-match.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232383E2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='6' y1='12' x2='10' y2='12'/%3E%3Cline x1='8' y1='10' x2='8' y2='14'/%3E%3Ccircle cx='16' cy='11' r='1'/%3E%3Ccircle cx='18.5' cy='13.5' r='1'/%3E%3Cpath d='M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "카드 짝맞추기",
+  "description": "4x4 카드를 뒤집어 같은 그림끼리 짝을 맞추는 기억력 게임. 이동 횟수가 적을수록 고득점.",
+  "applicationCategory": "Game",
+  "genre": "퍼즐",
+  "operatingSystem": "Web",
+  "url": "https://dsc260630-maker.github.io/play/memory-match.html",
+  "publisher": { "@type": "Organization", "name": "DSC GAMES" }
+}
+</script>
+</head>
+<body data-game-id="11" data-file-path="ca471e54-7900-436a-bdf6-06be423d7070/1786678687579_04_memory_match.html">
+
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <svg class="icon" viewBox="0 0 24 24">
+          <line x1="6" y1="12" x2="10" y2="12"/>
+          <line x1="8" y1="10" x2="8" y2="14"/>
+          <circle cx="16" cy="11" r="1"/>
+          <circle cx="18.5" cy="13.5" r="1"/>
+          <path d="M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z"/>
+        </svg>
+        DSC GAMES
+      </a>
+      <div class="header-actions">
+        <a href="../about.html" class="nav-link">소개</a>
+        <a href="../board/" class="nav-link">게시판</a>
+        <div id="authArea"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container play-page">
+    <a href="../index.html" class="post-back">&larr; 게임 목록으로</a>
+
+    <header class="post-header">
+      <span class="tag">퍼즐</span>
+      <h1 class="post-title">카드 짝맞추기</h1>
+    </header>
+
+    <div class="play-stage">
+      <div id="playStartScreen" class="play-start" style="aspect-ratio:4/5">
+        <p class="card-meta" id="playStartScore">불러오는 중...</p>
+        <button type="button" class="btn" id="startGameBtn">시작하기</button>
+      </div>
+      <div id="playLoading" class="play-start" style="aspect-ratio:4/5" hidden>
+        <p class="card-meta">불러오는 중...</p>
+      </div>
+      <iframe id="playFrame" class="play-frame" style="aspect-ratio:4/5" title="게임 화면" hidden
+              sandbox="allow-scripts allow-pointer-lock allow-forms allow-popups"></iframe>
+    </div>
+
+    <article class="post-body play-guide">
+      
+      <p><strong>카드 짝맞추기</strong>는 4x4로 배열된 16장의 카드를 두 장씩 뒤집어 같은 그림끼리
+      짝을 맞추는 기억력 게임입니다. 모든 짝을 맞추면 게임이 끝나며, 이동 횟수가 적을수록
+      점수가 높습니다.</p>
+      <h2>기본 규칙</h2>
+      <ul>
+        <li>카드 두 장을 차례로 클릭해서 뒤집습니다.</li>
+        <li>같은 그림이면 그대로 열린 채로 남고, 다르면 잠시 후 다시 뒤집힙니다.</li>
+        <li>모든 카드의 짝을 맞추면 클리어이며, 이동 횟수가 적을수록 최종 점수가 높습니다.</li>
+      </ul>
+      <h2>이동 횟수 줄이는 팁</h2>
+      <h3>1. 첫 라운드에서 위치를 최대한 암기하세요</h3>
+      <p>처음 두 장을 뒤집을 때 짝이 아니더라도 그 위치와 그림을 기억해두면, 이후 다른 카드를
+      뒤집다가 짝을 발견했을 때 바로 이동해 헛수를 줄일 수 있습니다.</p>
+      <h3>2. 왼쪽 위부터 순서대로 확인하세요</h3>
+      <p>무작위로 여기저기 클릭하기보다 보드를 순서대로(예: 왼쪽 위부터 오른쪽 아래로) 훑으면
+      전체 배치를 체계적으로 기억하기 쉬워 실수가 줄어듭니다.</p>
+    
+    </article>
+  </main>
+
+  <div id="authModal"></div>
+
+  <footer style="padding:32px 24px;text-align:center;color:var(--sub);font-size:13px">
+    <a href="../index.html" style="color:var(--sub);text-decoration:underline">게임 목록으로</a>
+    &nbsp;·&nbsp;
+    <a href="../board/" style="color:var(--sub);text-decoration:underline">게시판</a>
+    &nbsp;·&nbsp;
+    <a href="../legal.html" style="color:var(--sub);text-decoration:underline">이용약관 및 개인정보처리방침</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/play.js"></script>
+</body>
+</html>

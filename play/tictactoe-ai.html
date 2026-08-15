@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422466553554678" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>틱택토 vs AI — DSC GAMES</title>
+<meta name="description" content="3x3 보드에서 AI를 상대로 즐기는 틱택토. 중앙 선점과 이중 위협으로 승률을 높여보세요.">
+<meta property="og:title" content="틱택토 vs AI — DSC GAMES">
+<meta property="og:description" content="3x3 보드에서 AI를 상대로 즐기는 틱택토. 중앙 선점과 이중 위협으로 승률을 높여보세요.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2383E2">
+<link rel="canonical" href="https://dsc260630-maker.github.io/play/tictactoe-ai.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232383E2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='6' y1='12' x2='10' y2='12'/%3E%3Cline x1='8' y1='10' x2='8' y2='14'/%3E%3Ccircle cx='16' cy='11' r='1'/%3E%3Ccircle cx='18.5' cy='13.5' r='1'/%3E%3Cpath d='M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "틱택토 vs AI",
+  "description": "3x3 보드에서 AI를 상대로 즐기는 틱택토. 중앙 선점과 이중 위협으로 승률을 높여보세요.",
+  "applicationCategory": "Game",
+  "genre": "전략",
+  "operatingSystem": "Web",
+  "url": "https://dsc260630-maker.github.io/play/tictactoe-ai.html",
+  "publisher": { "@type": "Organization", "name": "DSC GAMES" }
+}
+</script>
+</head>
+<body data-game-id="15" data-file-path="ca471e54-7900-436a-bdf6-06be423d7070/1786678690346_08_tictactoe_ai.html">
+
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <svg class="icon" viewBox="0 0 24 24">
+          <line x1="6" y1="12" x2="10" y2="12"/>
+          <line x1="8" y1="10" x2="8" y2="14"/>
+          <circle cx="16" cy="11" r="1"/>
+          <circle cx="18.5" cy="13.5" r="1"/>
+          <path d="M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z"/>
+        </svg>
+        DSC GAMES
+      </a>
+      <div class="header-actions">
+        <a href="../about.html" class="nav-link">소개</a>
+        <a href="../board/" class="nav-link">게시판</a>
+        <div id="authArea"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container play-page">
+    <a href="../index.html" class="post-back">&larr; 게임 목록으로</a>
+
+    <header class="post-header">
+      <span class="tag">전략</span>
+      <h1 class="post-title">틱택토 vs AI</h1>
+    </header>
+
+    <div class="play-stage">
+      <div id="playStartScreen" class="play-start" style="aspect-ratio:4/5">
+        <p class="card-meta" id="playStartScore">불러오는 중...</p>
+        <button type="button" class="btn" id="startGameBtn">시작하기</button>
+      </div>
+      <div id="playLoading" class="play-start" style="aspect-ratio:4/5" hidden>
+        <p class="card-meta">불러오는 중...</p>
+      </div>
+      <iframe id="playFrame" class="play-frame" style="aspect-ratio:4/5" title="게임 화면" hidden
+              sandbox="allow-scripts allow-pointer-lock allow-forms allow-popups"></iframe>
+    </div>
+
+    <article class="post-body play-guide">
+      
+      <p><strong>틱택토 vs AI</strong>는 3x3 보드에서 AI를 상대로 가로·세로·대각선 중 한 줄을 먼저
+      채우면 승리하는 클래식 전략 게임입니다. 단순해 보이지만 첫 수의 위치가 승패를 크게 좌우합니다.</p>
+      <h2>기본 규칙</h2>
+      <ul>
+        <li>빈 칸을 클릭해 표시를 놓습니다. 사람이 먼저, AI가 이어서 둡니다.</li>
+        <li>가로·세로·대각선 어느 한 줄을 먼저 채우면 승리합니다.</li>
+        <li>9칸이 모두 채워지도록 승부가 나지 않으면 무승부입니다.</li>
+      </ul>
+      <h2>AI를 이기는 전략</h2>
+      <h3>1. 중앙 칸을 먼저 차지하세요</h3>
+      <p>중앙 칸은 가로·세로·대각선 4개 줄에 모두 포함되는 유일한 칸입니다. 첫 수로 중앙을
+      차지하면 이후 다양한 승리 조합을 만들 수 있어 유리합니다.</p>
+      <h3>2. 동시에 두 줄을 위협하는 자리를 노리세요</h3>
+      <p>한 수로 두 개의 승리 줄을 동시에 완성 직전까지 만들 수 있다면, AI는 둘 중 하나만 막을 수
+      있으므로 다음 차례에 승리할 수 있습니다.</p>
+    
+    </article>
+  </main>
+
+  <div id="authModal"></div>
+
+  <footer style="padding:32px 24px;text-align:center;color:var(--sub);font-size:13px">
+    <a href="../index.html" style="color:var(--sub);text-decoration:underline">게임 목록으로</a>
+    &nbsp;·&nbsp;
+    <a href="../board/" style="color:var(--sub);text-decoration:underline">게시판</a>
+    &nbsp;·&nbsp;
+    <a href="../legal.html" style="color:var(--sub);text-decoration:underline">이용약관 및 개인정보처리방침</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/play.js"></script>
+</body>
+</html>

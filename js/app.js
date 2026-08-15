@@ -14,6 +14,28 @@ let myScores = {};
 // --- 게임 카드 썸네일 아이콘 ---
 // 제목이 일치하는 게임은 전용 아이콘을, 그 외에는 카테고리 기본 아이콘을 보여준다.
 // (기존 디자인 시스템의 라인 아이콘 스타일(.icon)을 그대로 따름 — 색/두께는 CSS 토큰이 담당)
+// 게임 제목 -> /play/ 상세 페이지 슬러그
+const GAME_SLUGS = {
+  '업 다운 숫자 맞추기 !': 'guess-number',
+  '벽돌깨기': 'breakout',
+  '두더지 잡기': 'whack-a-mole',
+  '점프 러너': 'jump-runner',
+  '2048 미니': '2048-mini',
+  '카드 짝맞추기': 'memory-match',
+  '클릭 스피드 챌린지': 'click-speed',
+  '색깔 기억하기': 'color-memory',
+  '풍선 터뜨리기': 'balloon-pop',
+  '틱택토 vs AI': 'tictactoe-ai',
+  '컬러 채우기': 'flood-fill',
+  '미니 오목': 'gomoku',
+  '3차선 카레이싱': 'lane-racing',
+  '커브 도로 레이싱': 'curve-racing',
+  '코인 레이싱': 'coin-racing',
+  '스페이스 슈터': 'space-shooter',
+  '갤럭시 슈팅': 'galaxy-shooter',
+  '타겟 슈팅': 'target-shooting',
+};
+
 const GAME_ICONS = {
   '벽돌깨기': '<rect x="3" y="4" width="6" height="3"/><rect x="10" y="4" width="6" height="3"/><rect x="17" y="4" width="4" height="3"/><rect x="5" y="9" width="6" height="3"/><rect x="12" y="9" width="6" height="3"/><circle cx="12" cy="18" r="2"/>',
   '업 다운 숫자 맞추기 !': '<path d="M12 3v7"/><path d="M8 7l4-4 4 4"/><path d="M12 21v-7"/><path d="M8 17l4 4 4-4"/>',
@@ -188,162 +210,20 @@ function renderGrid() {
     </div>
   `;
 
-  // 카드 클릭 → 재생 모달 오픈
+  // 카드 클릭 → 게임 상세 페이지(/play/<slug>.html)로 이동
   grid.querySelectorAll('.game-card').forEach(card => {
     card.addEventListener('click', () => {
       const id = Number(card.dataset.id);
       const game = GAMES.find(g => g.id === id);
-      if (game) openPlayModal(game);
+      if (!game) return;
+      const slug = GAME_SLUGS[game.title];
+      if (!slug) {
+        showToast('이 게임의 상세 페이지는 아직 준비 중이에요.');
+        return;
+      }
+      window.location.href = `play/${slug}.html`;
     });
   });
-}
-
-// ============================================
-// 재생 모달 (iframe 팝업)
-// ============================================
-
-function initPlayModal() {
-  const modal = document.getElementById('playModal');
-  modal.classList.add('modal-overlay');
-  modal.innerHTML = `
-    <div class="modal-box">
-      <div class="modal-header">
-        <h3 id="playModalTitle"></h3>
-        <button type="button" class="icon-btn" id="closePlayModal" aria-label="닫기">
-          <svg class="icon" viewBox="0 0 24 24">
-            <line x1="18" y1="6" x2="6" y2="18"/>
-            <line x1="6" y1="6" x2="18" y2="18"/>
-          </svg>
-        </button>
-      </div>
-      <div class="modal-body">
-        <div id="playStartScreen" class="play-start">
-          <span class="tag" id="playStartTag"></span>
-          <p class="card-meta" id="playStartScore"></p>
-          <button type="button" class="btn" id="startGameBtn">시작하기</button>
-        </div>
-        <div id="playLoading" class="play-start" hidden>
-          <p class="card-meta">불러오는 중...</p>
-        </div>
-        <iframe id="playFrame" class="play-frame" title="게임 화면" hidden
-                sandbox="allow-scripts allow-pointer-lock allow-forms allow-popups"></iframe>
-      </div>
-    </div>
-  `;
-
-  document.getElementById('closePlayModal').addEventListener('click', closePlayModal);
-  document.getElementById('startGameBtn').addEventListener('click', startPendingGame);
-
-  // 오버레이(바깥 영역) 클릭 시 닫기 — 모달 박스 클릭은 제외
-  modal.addEventListener('click', (e) => {
-    if (e.target === modal) closePlayModal();
-  });
-
-  // ESC 키로 닫기
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && modal.classList.contains('is-open')) closePlayModal();
-  });
-}
-
-function getGamePublicUrl(filePath) {
-  const { data } = sb.storage.from('game-files').getPublicUrl(filePath);
-  return data.publicUrl;
-}
-
-// 현재 재생 모달이 열려있는 동안의 점수 메시지 리스너 (닫을 때 반드시 해제)
-let currentScoreHandler = null;
-// 시작 대기 화면에서 "시작하기"를 누르면 실행할 게임
-let pendingGame = null;
-// 현재 iframe에 로드된 게임의 blob URL (닫거나 새로 시작할 때 해제)
-let currentGameBlobUrl = null;
-
-function openPlayModal(game) {
-  pendingGame = game;
-
-  document.getElementById('playModalTitle').textContent = game.title;
-  document.getElementById('playStartTag').textContent = game.category;
-  document.getElementById('playStartScore').textContent = myScores[game.id]
-    ? `내 최고 점수: ${myScores[game.id].toLocaleString()}`
-    : '아직 플레이 기록이 없어요';
-
-  document.getElementById('playStartScreen').hidden = false;
-  document.getElementById('playLoading').hidden = true;
-  const frame = document.getElementById('playFrame');
-  frame.hidden = true;
-  frame.src = 'about:blank';
-  if (currentGameBlobUrl) {
-    URL.revokeObjectURL(currentGameBlobUrl);
-    currentGameBlobUrl = null;
-  }
-
-  document.getElementById('playModal').classList.add('is-open');
-  document.body.style.overflow = 'hidden';
-}
-
-async function startPendingGame() {
-  const game = pendingGame;
-  if (!game) return;
-
-  document.getElementById('playStartScreen').hidden = true;
-  document.getElementById('playLoading').hidden = false;
-  const frame = document.getElementById('playFrame');
-
-  // 게임이 postMessage({ type: 'gamebox:score', score }) 로 점수를 보내오면 최고 점수 갱신 시도.
-  // event.source로 지금 열려있는 게임 iframe이 보낸 메시지인지 확인해서 다른 메시지는 무시.
-  if (currentScoreHandler) window.removeEventListener('message', currentScoreHandler);
-  currentScoreHandler = (event) => {
-    if (event.source !== frame.contentWindow) return;
-    if (!event.data || event.data.type !== 'gamebox:score') return;
-    const score = Math.floor(Number(event.data.score));
-    if (!Number.isFinite(score) || score < 0) return;
-    submitScore(game.id, score);
-  };
-  window.addEventListener('message', currentScoreHandler);
-
-  // Supabase Storage가 공개 버킷의 HTML을 text/plain으로 강제 서빙하기 때문에
-  // <iframe src="게임파일URL">로는 실행이 안 됨 → fetch로 원문을 받아온 뒤 blob URL을 만들어 그걸 src로 넣는다.
-  // (참고: srcdoc으로 직접 주입하면 sandbox 처리된 opaque-origin 문서가 간헐적으로
-  //  전혀 페인트되지 않는 채로 남는 브라우저 렌더링 버그가 있어 blob URL 방식으로 교체함)
-  let blobUrl;
-  try {
-    const res = await fetch(getGamePublicUrl(game.file_path));
-    if (!res.ok) throw new Error(`파일을 불러오지 못했습니다 (${res.status})`);
-    const html = await res.text();
-    blobUrl = URL.createObjectURL(new Blob([html], { type: 'text/html' }));
-  } catch (err) {
-    document.getElementById('playLoading').hidden = true;
-    document.getElementById('playStartScreen').hidden = false;
-    showToast(`게임을 불러오지 못했습니다: ${err.message}`);
-    return;
-  }
-
-  document.getElementById('playLoading').hidden = true;
-  frame.hidden = false;
-  if (currentGameBlobUrl) URL.revokeObjectURL(currentGameBlobUrl);
-  currentGameBlobUrl = blobUrl;
-  frame.src = blobUrl;
-
-  // 플레이 수 증가 (낙관적 업데이트 + 서버 반영)
-  game.plays += 1;
-  renderGrid();
-  sb.rpc('increment_plays', { game_id: game.id }).then(({ error }) => {
-    if (error) console.error('플레이 수 반영 실패:', error.message);
-  });
-}
-
-function closePlayModal() {
-  document.getElementById('playModal').classList.remove('is-open');
-  document.getElementById('playFrame').src = 'about:blank';
-  if (currentGameBlobUrl) {
-    URL.revokeObjectURL(currentGameBlobUrl);
-    currentGameBlobUrl = null;
-  }
-  document.body.style.overflow = '';
-  pendingGame = null;
-  if (currentScoreHandler) {
-    window.removeEventListener('message', currentScoreHandler);
-    currentScoreHandler = null;
-  }
 }
 
 // ============================================
@@ -547,7 +427,6 @@ async function init() {
   document.getElementById('gameGrid').innerHTML = `<p class="empty-state">불러오는 중...</p>`;
   await loadGames();
   renderGrid();
-  initPlayModal();
   initUploadModal();
   // auth.js의 최초 로그인 상태 확인이 이 시점보다 먼저 끝났을 수 있으니 한 번 더 동기화
   loadMyScores();
