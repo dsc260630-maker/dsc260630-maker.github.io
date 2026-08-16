@@ -544,7 +544,7 @@ main{padding:32px 0 80px}
    게임 상세 페이지 (/play/*.html)
    ============================================ */
 .play-page{max-width:820px}
-.play-stage{margin:24px 0 40px}
+.play-stage{margin:24px auto 40px;max-width:66.6667%}
 .play-stage .play-frame,
 .play-stage .play-start{max-width:100%;margin:0 auto}
 .play-guide{padding-top:8px;border-top:1px solid var(--border)}
