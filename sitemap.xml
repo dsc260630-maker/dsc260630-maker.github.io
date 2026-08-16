@@ -25,8 +25,8 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://dsc260630-maker.github.io/board/2026-08-14-gamebox-open.html</loc>
-    <lastmod>2026-08-14</lastmod>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-01-gamebox-open.html</loc>
+    <lastmod>2026-08-01</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
@@ -69,6 +69,78 @@
   <url>
     <loc>https://dsc260630-maker.github.io/board/2026-08-14-game-color-memory.html</loc>
     <lastmod>2026-08-14</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-guess-number.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-breakout.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-jump-runner.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-memory-match.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-click-speed.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-balloon-pop.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-tictactoe-ai.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-flood-fill.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-curve-racing.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-coin-racing.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-space-shooter.html</loc>
+    <lastmod>2026-08-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://dsc260630-maker.github.io/board/2026-08-16-game-galaxy-shooter.html</loc>
+    <lastmod>2026-08-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>
