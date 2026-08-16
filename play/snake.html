@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422466553554678" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>스네이크 — DSC GAMES</title>
+<meta name="description" content="먹이를 먹을수록 길어지는 클래식 스네이크 게임. 벽이나 자기 몸에 부딪히지 않고 얼마나 오래 버틸 수 있을까요.">
+<meta property="og:title" content="스네이크 — DSC GAMES">
+<meta property="og:description" content="먹이를 먹을수록 길어지는 클래식 스네이크 게임. 벽이나 자기 몸에 부딪히지 않고 얼마나 오래 버틸 수 있을까요.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2383E2">
+<link rel="canonical" href="https://dsc260630-maker.github.io/play/snake.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232383E2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='6' y1='12' x2='10' y2='12'/%3E%3Cline x1='8' y1='10' x2='8' y2='14'/%3E%3Ccircle cx='16' cy='11' r='1'/%3E%3Ccircle cx='18.5' cy='13.5' r='1'/%3E%3Cpath d='M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "스네이크",
+  "description": "먹이를 먹을수록 길어지는 클래식 스네이크 게임. 벽이나 자기 몸에 부딪히지 않고 얼마나 오래 버틸 수 있을까요.",
+  "applicationCategory": "Game",
+  "genre": "액션",
+  "operatingSystem": "Web",
+  "url": "https://dsc260630-maker.github.io/play/snake.html",
+  "publisher": { "@type": "Organization", "name": "DSC GAMES" }
+}
+</script>
+</head>
+<body data-game-id="25" data-file-path="ca471e54-7900-436a-bdf6-06be423d7070/snake.html">
+
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <svg class="icon" viewBox="0 0 24 24">
+          <line x1="6" y1="12" x2="10" y2="12"/>
+          <line x1="8" y1="10" x2="8" y2="14"/>
+          <circle cx="16" cy="11" r="1"/>
+          <circle cx="18.5" cy="13.5" r="1"/>
+          <path d="M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z"/>
+        </svg>
+        DSC GAMES
+      </a>
+      <div class="header-actions">
+        <a href="../about.html" class="nav-link">소개</a>
+        <a href="../board/" class="nav-link">게시판</a>
+        <div id="authArea"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container play-page">
+    <a href="../index.html" class="post-back">&larr; 게임 목록으로</a>
+
+    <header class="post-header">
+      <span class="tag">액션</span>
+      <h1 class="post-title">스네이크</h1>
+    </header>
+
+    <div class="play-stage">
+      <div id="playStartScreen" class="play-start" style="aspect-ratio:4/3">
+        <p class="card-meta" id="playStartScore">불러오는 중...</p>
+        <button type="button" class="btn" id="startGameBtn">시작하기</button>
+      </div>
+      <div id="playLoading" class="play-start" style="aspect-ratio:4/3" hidden>
+        <p class="card-meta">불러오는 중...</p>
+      </div>
+      <iframe id="playFrame" class="play-frame" style="aspect-ratio:4/3" title="게임 화면" hidden
+              sandbox="allow-scripts allow-pointer-lock allow-forms allow-popups"></iframe>
+    </div>
+
+    <article class="post-body play-guide">
+      
+      <p><strong>스네이크</strong>는 먹이를 먹을 때마다 몸이 길어지는 클래식 아케이드 게임입니다.
+      벽이나 자기 몸에 부딪히면 게임이 끝나므로, 길어질수록 조작이 까다로워집니다.</p>
+      <h2>기본 규칙</h2>
+      <ul>
+        <li>방향키(또는 WASD, 모바일에서는 스와이프)로 이동 방향을 바꿉니다.</li>
+        <li>빨간 먹이를 먹으면 몸이 길어지고 점수가 오르며, 속도도 조금씩 빨라집니다.</li>
+        <li>벽 또는 자기 몸에 부딪히면 게임 오버입니다.</li>
+      </ul>
+      <h2>오래 살아남는 팁</h2>
+      <h3>1. 벽 쪽보다 중앙 위주로 움직이세요</h3>
+      <p>벽 근처에서 방향을 바꾸면 한 번의 실수로 바로 충돌할 수 있습니다. 화면 중앙을 크게 도는
+      경로를 유지하면 대응할 시간이 늘어납니다.</p>
+      <h3>2. 몸이 길어질수록 넓게 도세요</h3>
+      <p>몸이 길어질수록 자기 몸과 부딪힐 위험도 커집니다. 좁게 꺾기보다 넓은 원을 그리듯 움직이면
+      꼬리를 피해 다니기 훨씬 쉬워집니다.</p>
+    
+    </article>
+  </main>
+
+  <div id="authModal"></div>
+
+  <footer style="padding:32px 24px;text-align:center;color:var(--sub);font-size:13px">
+    <a href="../index.html" style="color:var(--sub);text-decoration:underline">게임 목록으로</a>
+    &nbsp;·&nbsp;
+    <a href="../board/" style="color:var(--sub);text-decoration:underline">게시판</a>
+    &nbsp;·&nbsp;
+    <a href="../legal.html" style="color:var(--sub);text-decoration:underline">이용약관 및 개인정보처리방침</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/play.js"></script>
+</body>
+</html>

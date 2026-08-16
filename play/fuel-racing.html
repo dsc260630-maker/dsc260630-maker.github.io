@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7422466553554678" crossorigin="anonymous"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>연료 레이싱 — DSC GAMES</title>
+<meta name="description" content="차선을 오가며 연료통을 모으고 장애물을 피하는 레이싱 게임. 연료가 떨어지면 게임이 끝납니다.">
+<meta property="og:title" content="연료 레이싱 — DSC GAMES">
+<meta property="og:description" content="차선을 오가며 연료통을 모으고 장애물을 피하는 레이싱 게임. 연료가 떨어지면 게임이 끝납니다.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#2383E2">
+<link rel="canonical" href="https://dsc260630-maker.github.io/play/fuel-racing.html">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%232383E2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cline x1='6' y1='12' x2='10' y2='12'/%3E%3Cline x1='8' y1='10' x2='8' y2='14'/%3E%3Ccircle cx='16' cy='11' r='1'/%3E%3Ccircle cx='18.5' cy='13.5' r='1'/%3E%3Cpath d='M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z'/%3E%3C/svg%3E">
+<link rel="stylesheet" href="../css/style.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "연료 레이싱",
+  "description": "차선을 오가며 연료통을 모으고 장애물을 피하는 레이싱 게임. 연료가 떨어지면 게임이 끝납니다.",
+  "applicationCategory": "Game",
+  "genre": "레이싱",
+  "operatingSystem": "Web",
+  "url": "https://dsc260630-maker.github.io/play/fuel-racing.html",
+  "publisher": { "@type": "Organization", "name": "DSC GAMES" }
+}
+</script>
+</head>
+<body data-game-id="29" data-file-path="ca471e54-7900-436a-bdf6-06be423d7070/fuel-racing.html">
+
+  <header class="header">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <svg class="icon" viewBox="0 0 24 24">
+          <line x1="6" y1="12" x2="10" y2="12"/>
+          <line x1="8" y1="10" x2="8" y2="14"/>
+          <circle cx="16" cy="11" r="1"/>
+          <circle cx="18.5" cy="13.5" r="1"/>
+          <path d="M7 6h10a5 5 0 0 1 5 5v3a4 4 0 0 1-4 4c-1 0-1.6-.4-2.3-1.1L14 15.3a3 3 0 0 0-2-.8h0a3 3 0 0 0-2 .8l-1.7 1.6C7.6 17.6 7 18 6 18a4 4 0 0 1-4-4v-3a5 5 0 0 1 5-5z"/>
+        </svg>
+        DSC GAMES
+      </a>
+      <div class="header-actions">
+        <a href="../about.html" class="nav-link">소개</a>
+        <a href="../board/" class="nav-link">게시판</a>
+        <div id="authArea"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container play-page">
+    <a href="../index.html" class="post-back">&larr; 게임 목록으로</a>
+
+    <header class="post-header">
+      <span class="tag">레이싱</span>
+      <h1 class="post-title">연료 레이싱</h1>
+    </header>
+
+    <div class="play-stage">
+      <div id="playStartScreen" class="play-start" style="aspect-ratio:4/3">
+        <p class="card-meta" id="playStartScore">불러오는 중...</p>
+        <button type="button" class="btn" id="startGameBtn">시작하기</button>
+      </div>
+      <div id="playLoading" class="play-start" style="aspect-ratio:4/3" hidden>
+        <p class="card-meta">불러오는 중...</p>
+      </div>
+      <iframe id="playFrame" class="play-frame" style="aspect-ratio:4/3" title="게임 화면" hidden
+              sandbox="allow-scripts allow-pointer-lock allow-forms allow-popups"></iframe>
+    </div>
+
+    <article class="post-body play-guide">
+      
+      <p><strong>연료 레이싱</strong>은 3차선을 오가며 떨어지는 연료통을 모으고 장애물을 피하는
+      레이싱 게임입니다. 시간이 지날수록 연료가 계속 줄어들기 때문에, 피하기만 해서는 오래
+      버틸 수 없습니다.</p>
+      <h2>기본 규칙</h2>
+      <ul>
+        <li>← / → 방향키(또는 A / D 키, 모바일 스와이프)로 차선을 이동합니다.</li>
+        <li>연료 게이지는 시간이 지나면 자동으로 줄어들고, 0이 되면 게임이 끝납니다.</li>
+        <li>연료통(F)을 지나가면 연료가 채워집니다. 다른 차와 부딪히면 즉시 게임 오버입니다.</li>
+        <li>생존 시간에 비례해 점수가 오릅니다.</li>
+      </ul>
+      <h2>오래 살아남는 팁</h2>
+      <h3>1. 연료가 30% 아래로 떨어지기 전에 미리 챙기세요</h3>
+      <p>연료가 거의 바닥난 뒤에 연료통을 찾으러 무리하게 차선을 바꾸면 장애물과 부딪히기
+      쉽습니다. 여유가 있을 때 눈에 보이는 연료통을 미리미리 챙겨두는 것이 안전합니다.</p>
+      <h3>2. 장애물 회피가 항상 우선입니다</h3>
+      <p>연료통과 장애물이 같은 차선에 겹쳐 보이면, 연료보다 충돌 회피를 먼저 생각하세요.
+      부딪히면 그 자리에서 게임이 끝나지만, 연료는 소진돼도 약간의 여유가 더 있습니다.</p>
+    
+    </article>
+  </main>
+
+  <div id="authModal"></div>
+
+  <footer style="padding:32px 24px;text-align:center;color:var(--sub);font-size:13px">
+    <a href="../index.html" style="color:var(--sub);text-decoration:underline">게임 목록으로</a>
+    &nbsp;·&nbsp;
+    <a href="../board/" style="color:var(--sub);text-decoration:underline">게시판</a>
+    &nbsp;·&nbsp;
+    <a href="../legal.html" style="color:var(--sub);text-decoration:underline">이용약관 및 개인정보처리방침</a>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+  <script src="../js/supabaseClient.js"></script>
+  <script src="../js/auth.js"></script>
+  <script src="../js/play.js"></script>
+</body>
+</html>

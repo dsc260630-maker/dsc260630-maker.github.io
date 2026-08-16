@@ -34,6 +34,12 @@ const GAME_SLUGS = {
   '스페이스 슈터': 'space-shooter',
   '갤럭시 슈팅': 'galaxy-shooter',
   '타겟 슈팅': 'target-shooting',
+  '스네이크': 'snake',
+  '슬라이드 퍼즐': 'slide-puzzle',
+  '숫자 순서 클릭': 'number-order',
+  '커넥트4 vs AI': 'connect-four',
+  '연료 레이싱': 'fuel-racing',
+  '보스 슈팅': 'boss-shooter',
 };
 
 const GAME_ICONS = {
