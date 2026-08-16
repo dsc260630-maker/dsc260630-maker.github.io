@@ -155,7 +155,10 @@ function renderFilterBar() {
 function getFilteredGames() {
   let list = GAMES.filter(g => {
     const matchKeyword = g.title.toLowerCase().includes(state.keyword.toLowerCase());
-    const matchCategory = state.category === '전체' || g.category === state.category;
+    // 'DSC 오리지널'은 테마(category)가 아니라 is_original 플래그로 걸러지는 특수 필터라서
+    // 다른 테마 카테고리와 무관하게 오리지널 게임이면 항상 걸린다.
+    const matchCategory = state.category === '전체'
+      || (state.category === 'DSC 오리지널' ? g.is_original : g.category === state.category);
     return matchKeyword && matchCategory;
   });
 
@@ -233,7 +236,7 @@ function renderGrid() {
 function initUploadModal() {
   const modal = document.getElementById('uploadModal');
   modal.classList.add('modal-overlay');
-  const gameCategories = CATEGORIES.filter(c => c !== '전체');
+  const gameCategories = CATEGORIES.filter(c => c !== '전체' && c !== 'DSC 오리지널');
 
   modal.innerHTML = `
     <div class="modal-box">

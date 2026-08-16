@@ -86,7 +86,11 @@ img{max-width:100%;display:block}
   display:flex;
   align-items:center;
   justify-content:space-between;
-  height:68px;
+  flex-wrap:wrap;
+  min-height:68px;
+  row-gap:8px;
+  padding-top:10px;
+  padding-bottom:10px;
 }
 .logo{
   display:flex;
@@ -101,6 +105,7 @@ img{max-width:100%;display:block}
 .header-actions{
   display:flex;
   align-items:center;
+  flex-wrap:wrap;
   gap:12px;
 }
 
@@ -554,7 +559,7 @@ main{padding:32px 0 80px}
    ============================================ */
 @media (max-width:640px){
   .container{padding:0 16px}
-  .header .container{height:60px}
+  .header .container{min-height:60px}
   .logo{font-size:18px}
   .btn-upload span{display:none} /* 모바일에서는 아이콘만 */
   .btn-upload{padding:10px}
