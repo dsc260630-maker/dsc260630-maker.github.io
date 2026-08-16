@@ -550,10 +550,33 @@ main{padding:32px 0 80px}
    게임 상세 페이지 (/play/*.html)
    ============================================ */
 .play-page{max-width:820px}
-.play-stage{margin:24px auto 40px;max-width:66.6667%}
+.play-stage{position:relative;margin:24px auto 40px;max-width:66.6667%}
 .play-stage .play-frame,
 .play-stage .play-start{max-width:100%;margin:0 auto}
 .play-guide{padding-top:8px;border-top:1px solid var(--border)}
+
+.fullscreen-btn{
+  position:absolute;top:8px;right:8px;z-index:5;
+  width:34px;height:34px;border-radius:8px;
+  background:rgba(25,25,25,.55);color:#fff;border:none;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:.15s;
+}
+.fullscreen-btn:hover{background:rgba(25,25,25,.8)}
+.fullscreen-btn .icon{width:18px;height:18px;stroke-width:2}
+.play-stage:fullscreen,
+.play-stage:-webkit-full-screen{
+  max-width:100%;background:#000;
+  display:flex;align-items:center;justify-content:center;
+}
+.play-stage:fullscreen .play-frame,
+.play-stage:fullscreen .play-start,
+.play-stage:-webkit-full-screen .play-frame,
+.play-stage:-webkit-full-screen .play-start{
+  max-width:min(100vw, 133.33vh);
+  max-height:min(100vh, 75vw);
+  width:100%;height:auto;
+}
 
 /* ============================================
    반응형
@@ -568,4 +591,5 @@ main{padding:32px 0 80px}
   .sort-select{flex:1 1 100%}
   .modal-header{padding:16px}
   .modal-body{padding:16px}
+  .play-stage{max-width:100%}
 }

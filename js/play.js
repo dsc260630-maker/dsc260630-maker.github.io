@@ -108,5 +108,33 @@ function showToast(message) {
   showToast._timer = setTimeout(() => toast.classList.remove('show'), 2200);
 }
 
+// --- 전체화면 버튼: 모바일에서 게임 영역이 좁게 느껴질 때 화면 전체로 키울 수 있게 ---
+function initFullscreenButton() {
+  const stage = document.querySelector('.play-stage');
+  if (!stage || !stage.requestFullscreen) return; // 미지원 브라우저(구형 iOS Safari 등)면 버튼 자체를 안 보여줌
+
+  const btn = document.createElement('button');
+  btn.type = 'button';
+  btn.className = 'fullscreen-btn';
+  btn.setAttribute('aria-label', '전체화면');
+  btn.innerHTML = `
+    <svg class="icon" viewBox="0 0 24 24">
+      <path d="M8 3H5a2 2 0 0 0-2 2v3"/>
+      <path d="M21 8V5a2 2 0 0 0-2-2h-3"/>
+      <path d="M3 16v3a2 2 0 0 0 2 2h3"/>
+      <path d="M16 21h3a2 2 0 0 0 2-2v-3"/>
+    </svg>
+  `;
+  btn.addEventListener('click', () => {
+    if (document.fullscreenElement) {
+      document.exitFullscreen();
+    } else {
+      stage.requestFullscreen().catch(() => {});
+    }
+  });
+  stage.appendChild(btn);
+}
+
 document.getElementById('startGameBtn').addEventListener('click', startGame);
+initFullscreenButton();
 loadMyScores();
