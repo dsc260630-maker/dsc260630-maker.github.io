@@ -1430,10 +1430,10 @@
         </div>
       </div>
 
-      <!-- 닉네임 입력 및 랭킹 즉시 등록 -->
+      <!-- 랭킹 등록: 로그인 상태에 따라 표시되는 이름/버튼 문구가 자동으로 바뀐다 (updateRankSubmitUI) -->
       <div class="rank-submit-box" style="margin-top: 14px;">
-        <input type="text" class="nick-input" id="victoryPlayerNickname" placeholder="닉네임 입력 후 Enter" maxlength="10" onkeydown="if(event.key==='Enter'){submitScoreToLeaderboard('victory'); event.stopPropagation();}">
-        <button class="btn-submit-rank" onclick="submitScoreToLeaderboard('victory')">순위 등록 🏆</button>
+        <input type="text" class="nick-input" id="victoryPlayerNickname" placeholder="로그인이 필요합니다" readonly>
+        <button class="btn-submit-rank" id="victoryRankSubmitBtn" onclick="handleRankSubmitClick('victory')">로그인하고 등록</button>
       </div>
 
       <div style="display: flex; flex-direction: column; gap: 8px; margin-top: 6px;">
@@ -1476,10 +1476,10 @@
         </div>
       </div>
 
-      <!-- 닉네임 입력 및 랭킹 등록 -->
+      <!-- 랭킹 등록: 로그인 상태에 따라 표시되는 이름/버튼 문구가 자동으로 바뀐다 (updateRankSubmitUI) -->
       <div class="rank-submit-box">
-        <input type="text" class="nick-input" id="playerNickname" placeholder="닉네임 입력 후 Enter" maxlength="10" onkeydown="if(event.key==='Enter'){submitScoreToLeaderboard(); event.stopPropagation();}">
-        <button class="btn-submit-rank" onclick="submitScoreToLeaderboard()">순위 등록 🏆</button>
+        <input type="text" class="nick-input" id="playerNickname" placeholder="로그인이 필요합니다" readonly>
+        <button class="btn-submit-rank" id="gameOverRankSubmitBtn" onclick="handleRankSubmitClick('default')">로그인하고 등록</button>
       </div>
 
       <button class="btn-restart-large" onclick="game.restart()">
@@ -1589,6 +1589,26 @@
       <button class="btn-restart-large" onclick="closeModal('leaderboardModal'); game.restart();" style="margin-top:8px;">
         🚀 즉시 새 게임 시작하기
       </button>
+    </div>
+  </div>
+
+  <!-- 랭킹 등록 전 로그인/회원가입 (사이트 계정 공용) -->
+  <div class="modal-overlay" id="cosmicLoginModal">
+    <div class="modal-card" style="max-width: 320px;">
+      <div class="modal-header">
+        <span class="modal-title">🔐 로그인</span>
+        <button class="btn-close-modal" onclick="closeModal('cosmicLoginModal')">✕</button>
+      </div>
+      <p style="font-size: 12px; color: #9aa0b4; margin-bottom: 10px;">랭킹 등록에는 DSC GAMES 로그인이 필요해요. (사이트 계정과 동일해요)</p>
+      <div style="display: flex; flex-direction: column; gap: 8px;">
+        <input type="email" id="cosmicLoginEmail" class="nick-input" style="width: 100%; box-sizing: border-box;" placeholder="이메일">
+        <input type="password" id="cosmicLoginPassword" class="nick-input" style="width: 100%; box-sizing: border-box;" placeholder="비밀번호 (6자 이상)">
+      </div>
+      <p id="cosmicLoginError" style="color: #ff4757; font-size: 11px; min-height: 14px; margin-top: 6px;"></p>
+      <div style="display: flex; gap: 8px; margin-top: 6px;">
+        <button class="btn-submit-rank" style="flex: 1;" onclick="handleCosmicAuth('signin')">로그인</button>
+        <button class="btn-submit-rank" style="flex: 1; background: rgba(255,255,255,0.1); color: #fff;" onclick="handleCosmicAuth('signup')">회원가입</button>
+      </div>
     </div>
   </div>
 
@@ -1736,6 +1756,79 @@
       if (!session) return;
       const { error } = await sb.rpc('submit_score', { p_game_id: siteGameId, p_score: score });
       if (error) console.error('사이트 점수 반영 실패:', error.message);
+    }
+
+    // ------------------------------------------------------------
+    // 게임 자체 랭킹(오늘/주간/월간/명예의전당/완성시간) — Supabase 연동
+    // 사이트 로그인과 동일한 계정을 쓴다. 닉네임은 별도 입력 없이
+    // profiles.display_name을 그대로 사용한다.
+    // ------------------------------------------------------------
+    let cosmicUser = null;
+    let cosmicDisplayName = '';
+    let pendingRankSubmitSource = null; // 로그인 모달 띄우기 전에 어느 버튼을 눌렀는지 기억
+
+    async function refreshCosmicAuthState() {
+      const { data: { session } } = await sb.auth.getSession();
+      cosmicUser = session ? session.user : null;
+      if (cosmicUser) {
+        const { data } = await sb.from('profiles').select('display_name').eq('id', cosmicUser.id).single();
+        cosmicDisplayName = data?.display_name || '익명';
+      } else {
+        cosmicDisplayName = '';
+      }
+      updateRankSubmitUI();
+    }
+
+    sb.auth.onAuthStateChange(() => { refreshCosmicAuthState(); });
+    refreshCosmicAuthState();
+
+    function updateRankSubmitUI() {
+      [
+        { input: 'victoryPlayerNickname', btn: 'victoryRankSubmitBtn' },
+        { input: 'playerNickname', btn: 'gameOverRankSubmitBtn' }
+      ].forEach(({ input, btn }) => {
+        const inputEl = document.getElementById(input);
+        const btnEl = document.getElementById(btn);
+        if (!inputEl || !btnEl) return;
+        if (cosmicUser) {
+          inputEl.value = cosmicDisplayName;
+          btnEl.textContent = '순위 등록 🏆';
+        } else {
+          inputEl.value = '';
+          inputEl.placeholder = '로그인이 필요합니다';
+          btnEl.textContent = '로그인하고 등록';
+        }
+      });
+    }
+
+    function handleRankSubmitClick(source) {
+      if (!cosmicUser) {
+        pendingRankSubmitSource = source;
+        document.getElementById('cosmicLoginError').textContent = '';
+        openModal('cosmicLoginModal');
+        return;
+      }
+      submitScoreToLeaderboard(source);
+    }
+
+    async function handleCosmicAuth(mode) {
+      const email = document.getElementById('cosmicLoginEmail').value.trim();
+      const password = document.getElementById('cosmicLoginPassword').value;
+      const errorEl = document.getElementById('cosmicLoginError');
+      errorEl.textContent = '';
+
+      const { error } = mode === 'signin'
+        ? await sb.auth.signInWithPassword({ email, password })
+        : await sb.auth.signUp({ email, password });
+
+      if (error) { errorEl.textContent = error.message; return; }
+
+      await refreshCosmicAuthState();
+      closeModal('cosmicLoginModal');
+      if (pendingRankSubmitSource) {
+        submitScoreToLeaderboard(pendingRankSubmitSource);
+        pendingRankSubmitSource = null;
+      }
     }
   </script>
 
@@ -3339,50 +3432,10 @@
   }
 
   // 7. 리더보드 데이터 관리자
-  let defaultLeaderboardToday = [
-    { name: 'CosmicMaster', score: 18450, date: '오늘' },
-    { name: 'StarGazer', score: 14200, date: '오늘' },
-    { name: 'GalaxyPro', score: 11800, date: '오늘' },
-    { name: 'NeonPulse', score: 8640, date: '오늘' },
-    { name: 'LunaWalker', score: 6200, date: '오늘' }
-  ];
-  let defaultLeaderboardWeek = [
-    { name: 'StarGazer', score: 23600, date: '이번주' },
-    { name: 'CosmicMaster', score: 21800, date: '이번주' },
-    { name: 'AstroKing', score: 17900, date: '이번주' },
-    { name: 'GalaxyPro', score: 13500, date: '이번주' },
-    { name: 'SolarFlare', score: 10400, date: '이번주' }
-  ];
-  let defaultLeaderboardMonth = [
-    { name: 'SuperNova', score: 32400, date: '8월' },
-    { name: 'StarGazer', score: 26800, date: '8월' },
-    { name: 'CosmicMaster', score: 24500, date: '8월' },
-    { name: 'AstroKing', score: 22100, date: '8월' },
-    { name: 'BlackHoleVoyager', score: 18900, date: '8월' }
-  ];
-  let defaultLeaderboardAllTime = [
-    { name: 'SuperNova', score: 38900, date: '2026.08' },
-    { name: 'StarGazer', score: 32400, date: '2026.08' },
-    { name: 'CosmicMaster', score: 28900, date: '2026.08' },
-    { name: 'AstroKing', score: 24500, date: '2026.07' },
-    { name: 'GalaxyPro', score: 21200, date: '2026.07' }
-  ];
-  // ⏱️ 블랙홀 완성 시간 랭킹 — 점수와 별개로, 얼마나 빨리 블랙홀을 완성했는지만 따로 기록.
-  // 사이트(Supabase) 랭킹과는 무관하게 게임 자체 로컬 랭킹에만 존재한다.
-  let defaultLeaderBHTime = [
-    { name: 'SpeedNova', seconds: 495, date: '2026.08' },
-    { name: 'QuickPulsar', seconds: 580, date: '2026.08' },
-    { name: 'RushRunner', seconds: 650, date: '2026.08' },
-    { name: 'FastOrbit', seconds: 740, date: '2026.08' },
-    { name: 'SwiftComet', seconds: 845, date: '2026.08' }
-  ];
-
-  let leaderToday = JSON.parse(localStorage.getItem('cosmic_leader_today') || JSON.stringify(defaultLeaderboardToday));
-  let leaderWeek = JSON.parse(localStorage.getItem('cosmic_leader_week') || JSON.stringify(defaultLeaderboardWeek));
-  let leaderMonth = JSON.parse(localStorage.getItem('cosmic_leader_month') || JSON.stringify(defaultLeaderboardMonth));
-  let leaderAllTime = JSON.parse(localStorage.getItem('cosmic_leader_all') || JSON.stringify(defaultLeaderboardAllTime));
-  let leaderBHTime = JSON.parse(localStorage.getItem('cosmic_leader_bhtime') || JSON.stringify(defaultLeaderBHTime));
+  // 게임 자체 랭킹(오늘/주간/월간/명예의전당/완성시간)은 이제 localStorage가 아니라
+  // Supabase의 cosmic_leaderboard 테이블에서 직접 조회/등록한다 (기기 간 공유).
   let curLeaderTab = 'today';
+  let leaderboardFetchToken = 0; // 탭을 빠르게 전환할 때 늦게 도착한 이전 요청이 화면을 덮어쓰는 것 방지
 
   function openLeaderboard() {
     renderLeaderboardList();
@@ -3398,89 +3451,87 @@
     renderLeaderboardList();
   }
 
-  function renderLeaderboardList() {
+  function renderLeadRow(rank, name, valueText) {
+    const row = document.createElement('div');
+    let rankClass = '';
+    let rankIcon = `${rank}`;
+    if (rank === 1) { rankClass = 'top-1'; rankIcon = '🥇'; }
+    else if (rank === 2) { rankClass = 'top-2'; rankIcon = '🥈'; }
+    else if (rank === 3) { rankClass = 'top-3'; rankIcon = '🥉'; }
+    row.className = `lead-row ${rankClass}`;
+    row.innerHTML = `
+      <span class="lead-rank">${rankIcon}</span>
+      <span class="lead-name">${escapeHTML(name)}</span>
+      <span class="lead-score">${valueText}</span>
+    `;
+    return row;
+  }
+
+  async function renderLeaderboardList() {
     const listEl = document.getElementById('leaderboardList');
-    listEl.innerHTML = '';
+    const myToken = ++leaderboardFetchToken;
+    listEl.innerHTML = '<p style="text-align:center;color:#888;font-size:12px;padding:16px 0;">불러오는 중...</p>';
 
+    let query = sb.from('cosmic_leaderboard').select('value, profiles(display_name)');
     if (curLeaderTab === 'bhtime') {
-      leaderBHTime.sort((a, b) => a.seconds - b.seconds).slice(0, 10).forEach((entry, idx) => {
-        const row = document.createElement('div');
-        let rankClass = '';
-        let rankIcon = `${idx + 1}`;
-        if (idx === 0) { rankClass = 'top-1'; rankIcon = '🥇'; }
-        else if (idx === 1) { rankClass = 'top-2'; rankIcon = '🥈'; }
-        else if (idx === 2) { rankClass = 'top-3'; rankIcon = '🥉'; }
-
-        row.className = `lead-row ${rankClass}`;
-        row.innerHTML = `
-          <span class="lead-rank">${rankIcon}</span>
-          <span class="lead-name">${escapeHTML(entry.name)}</span>
-          <span class="lead-score">${formatMMSS(entry.seconds)}</span>
-        `;
-        listEl.appendChild(row);
-      });
-      return;
+      query = query.eq('category', 'bhtime').order('value', { ascending: true }).limit(10);
+    } else {
+      query = query.eq('category', 'score').order('value', { ascending: false }).limit(10);
+      if (curLeaderTab === 'today') {
+        const start = new Date(); start.setHours(0, 0, 0, 0);
+        query = query.gte('created_at', start.toISOString());
+      } else if (curLeaderTab === 'week') {
+        query = query.gte('created_at', new Date(Date.now() - 7 * 86400000).toISOString());
+      } else if (curLeaderTab === 'month') {
+        query = query.gte('created_at', new Date(Date.now() - 30 * 86400000).toISOString());
+      }
     }
 
-    let data = leaderToday;
-    if (curLeaderTab === 'week') data = leaderWeek;
-    else if (curLeaderTab === 'month') data = leaderMonth;
-    else if (curLeaderTab === 'alltime') data = leaderAllTime;
+    const { data, error } = await query;
+    if (myToken !== leaderboardFetchToken) return; // 그 사이 다른 탭으로 넘어갔으면 결과 버림
 
-    data.sort((a, b) => b.score - a.score).slice(0, 10).forEach((entry, idx) => {
-      const row = document.createElement('div');
-      let rankClass = '';
-      let rankIcon = `${idx + 1}`;
-      if (idx === 0) { rankClass = 'top-1'; rankIcon = '🥇'; }
-      else if (idx === 1) { rankClass = 'top-2'; rankIcon = '🥈'; }
-      else if (idx === 2) { rankClass = 'top-3'; rankIcon = '🥉'; }
-
-      row.className = `lead-row ${rankClass}`;
-      row.innerHTML = `
-        <span class="lead-rank">${rankIcon}</span>
-        <span class="lead-name">${escapeHTML(entry.name)}</span>
-        <span class="lead-score">${entry.score.toLocaleString()}점</span>
-      `;
-      listEl.appendChild(row);
+    listEl.innerHTML = '';
+    if (error) {
+      console.error('랭킹 조회 실패:', error.message);
+      listEl.innerHTML = '<p style="text-align:center;color:#888;font-size:12px;padding:16px 0;">랭킹을 불러오지 못했습니다.</p>';
+      return;
+    }
+    if (!data || data.length === 0) {
+      listEl.innerHTML = '<p style="text-align:center;color:#888;font-size:12px;padding:16px 0;">아직 기록이 없습니다. 첫 기록의 주인공이 되어보세요!</p>';
+      return;
+    }
+    data.forEach((entry, idx) => {
+      const name = entry.profiles?.display_name || '익명';
+      const valueText = curLeaderTab === 'bhtime' ? formatMMSS(entry.value) : `${entry.value.toLocaleString()}점`;
+      listEl.appendChild(renderLeadRow(idx + 1, name, valueText));
     });
   }
 
-  function submitScoreToLeaderboard(source = 'default') {
-    let nickInput = document.getElementById('playerNickname');
-    if (source === 'victory') {
-      const vInput = document.getElementById('victoryPlayerNickname');
-      if (vInput && vInput.value.trim()) nickInput = vInput;
-    }
-    const nick = (nickInput ? nickInput.value : '무명탐험가').trim().substring(0, 10) || '무명탐험가';
-    localStorage.setItem('cosmic_player_nick', nick);
+  async function submitScoreToLeaderboard(source = 'default') {
+    if (!cosmicUser) { handleRankSubmitClick(source); return; }
 
     const newScore = window.game ? window.game.score : 0;
     if (newScore <= 0) return;
 
-    leaderToday.push({ name: nick, score: newScore, date: '오늘' });
-    leaderWeek.push({ name: nick, score: newScore, date: '이번주' });
-    leaderMonth.push({ name: nick, score: newScore, date: '이번달' });
-    leaderAllTime.push({ name: nick, score: newScore, date: '2026.08' });
-
-    leaderToday.sort((a, b) => b.score - a.score);
-    leaderWeek.sort((a, b) => b.score - a.score);
-    leaderMonth.sort((a, b) => b.score - a.score);
-    leaderAllTime.sort((a, b) => b.score - a.score);
-
-    localStorage.setItem('cosmic_leader_today', JSON.stringify(leaderToday));
-    localStorage.setItem('cosmic_leader_week', JSON.stringify(leaderWeek));
-    localStorage.setItem('cosmic_leader_month', JSON.stringify(leaderMonth));
-    localStorage.setItem('cosmic_leader_all', JSON.stringify(leaderAllTime));
+    const { error } = await sb.from('cosmic_leaderboard').insert({
+      user_id: cosmicUser.id, category: 'score', value: Math.round(newScore)
+    });
+    if (error) {
+      console.error('점수 랭킹 등록 실패:', error.message);
+      alert('점수 등록에 실패했습니다: ' + error.message);
+      return;
+    }
 
     // 블랙홀을 완성한 판이면(source==='victory') 완성 시간도 별도 랭킹에 같이 기록
     if (source === 'victory' && window.game && window.game.lastBhCompletionSeconds != null) {
-      leaderBHTime.push({ name: nick, seconds: window.game.lastBhCompletionSeconds, date: '2026.08' });
-      leaderBHTime.sort((a, b) => a.seconds - b.seconds);
-      localStorage.setItem('cosmic_leader_bhtime', JSON.stringify(leaderBHTime));
+      const { error: timeErr } = await sb.from('cosmic_leaderboard').insert({
+        user_id: cosmicUser.id, category: 'bhtime', value: Math.round(window.game.lastBhCompletionSeconds)
+      });
+      if (timeErr) console.error('완성시간 랭킹 등록 실패:', timeErr.message);
       window.game.lastBhCompletionSeconds = null; // 중복 등록 방지
     }
 
-    alert(`🎉 [${nick}] 님의 점수 (${newScore.toLocaleString()}점) 가 글로벌 리더보드에 등록되었습니다!`);
+    alert(`🎉 [${cosmicDisplayName}] 님의 점수 (${newScore.toLocaleString()}점) 가 글로벌 리더보드에 등록되었습니다!`);
     closeModal('gameOverModal');
     closeModal('cosmicVictoryModal');
     openLeaderboard();
@@ -3760,9 +3811,6 @@
       if (typeof ResizeObserver !== 'undefined') {
         new ResizeObserver(() => this.resize()).observe(this.area);
       }
-
-      const savedNick = localStorage.getItem('cosmic_player_nick') || '';
-      if (savedNick) document.getElementById('playerNickname').value = savedNick;
 
       this.stars = [];
       for (let i = 0; i < 50; i++) {
@@ -5129,8 +5177,7 @@
       document.getElementById('victoryPlayTime').textContent = formatMMSS(elapsedSeconds);
       document.getElementById('victoryTimeBonus').textContent = `+${timeBonus.toLocaleString()}점`;
 
-      const nickInput = document.getElementById('victoryPlayerNickname');
-      if (nickInput) nickInput.value = localStorage.getItem('cosmic_player_nick') || '';
+      updateRankSubmitUI(); // 닉네임 입력칸에 로그인 상태(표시 이름)를 반영
 
       openModal('cosmicVictoryModal');
     }
