@@ -1389,6 +1389,14 @@
             <span class="stat-label">우주먼지 보상</span>
             <span class="stat-val" id="victoryCoins" style="color: #ffd700;">+0 ✨</span>
           </div>
+          <div class="stat-box">
+            <span class="stat-label">플레이 타임</span>
+            <span class="stat-val" id="victoryPlayTime" style="color: #a29bfe;">0:00</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-label">⏱️ 타임 보너스</span>
+            <span class="stat-val" id="victoryTimeBonus" style="color: #ffd700; font-size: 13px;">+0점</span>
+          </div>
         </div>
       </div>
 
@@ -1543,6 +1551,7 @@
         <div class="lead-tab" id="tab_week" onclick="switchLeaderboardTab('week')">📅 주간</div>
         <div class="lead-tab" id="tab_month" onclick="switchLeaderboardTab('month')">🗓️ 월간</div>
         <div class="lead-tab" id="tab_alltime" onclick="switchLeaderboardTab('alltime')">👑 명예전당</div>
+        <div class="lead-tab" id="tab_bhtime" onclick="switchLeaderboardTab('bhtime')">⏱️ 완성시간</div>
       </div>
       <div class="leaderboard-list" id="leaderboardList"></div>
 
@@ -3328,11 +3337,21 @@
     { name: 'AstroKing', score: 24500, date: '2026.07' },
     { name: 'GalaxyPro', score: 21200, date: '2026.07' }
   ];
+  // ⏱️ 블랙홀 완성 시간 랭킹 — 점수와 별개로, 얼마나 빨리 블랙홀을 완성했는지만 따로 기록.
+  // 사이트(Supabase) 랭킹과는 무관하게 게임 자체 로컬 랭킹에만 존재한다.
+  let defaultLeaderBHTime = [
+    { name: 'SpeedNova', seconds: 95, date: '2026.08' },
+    { name: 'QuickPulsar', seconds: 118, date: '2026.08' },
+    { name: 'RushRunner', seconds: 142, date: '2026.08' },
+    { name: 'FastOrbit', seconds: 176, date: '2026.08' },
+    { name: 'SwiftComet', seconds: 210, date: '2026.08' }
+  ];
 
   let leaderToday = JSON.parse(localStorage.getItem('cosmic_leader_today') || JSON.stringify(defaultLeaderboardToday));
   let leaderWeek = JSON.parse(localStorage.getItem('cosmic_leader_week') || JSON.stringify(defaultLeaderboardWeek));
   let leaderMonth = JSON.parse(localStorage.getItem('cosmic_leader_month') || JSON.stringify(defaultLeaderboardMonth));
   let leaderAllTime = JSON.parse(localStorage.getItem('cosmic_leader_all') || JSON.stringify(defaultLeaderboardAllTime));
+  let leaderBHTime = JSON.parse(localStorage.getItem('cosmic_leader_bhtime') || JSON.stringify(defaultLeaderBHTime));
   let curLeaderTab = 'today';
 
   function openLeaderboard() {
@@ -3342,7 +3361,7 @@
 
   function switchLeaderboardTab(tab) {
     curLeaderTab = tab;
-    ['today', 'week', 'month', 'alltime'].forEach(t => {
+    ['today', 'week', 'month', 'alltime', 'bhtime'].forEach(t => {
       const el = document.getElementById(`tab_${t}`);
       if (el) el.classList.toggle('active', tab === t);
     });
@@ -3352,6 +3371,27 @@
   function renderLeaderboardList() {
     const listEl = document.getElementById('leaderboardList');
     listEl.innerHTML = '';
+
+    if (curLeaderTab === 'bhtime') {
+      leaderBHTime.sort((a, b) => a.seconds - b.seconds).slice(0, 10).forEach((entry, idx) => {
+        const row = document.createElement('div');
+        let rankClass = '';
+        let rankIcon = `${idx + 1}`;
+        if (idx === 0) { rankClass = 'top-1'; rankIcon = '🥇'; }
+        else if (idx === 1) { rankClass = 'top-2'; rankIcon = '🥈'; }
+        else if (idx === 2) { rankClass = 'top-3'; rankIcon = '🥉'; }
+
+        row.className = `lead-row ${rankClass}`;
+        row.innerHTML = `
+          <span class="lead-rank">${rankIcon}</span>
+          <span class="lead-name">${escapeHTML(entry.name)}</span>
+          <span class="lead-score">${formatMMSS(entry.seconds)}</span>
+        `;
+        listEl.appendChild(row);
+      });
+      return;
+    }
+
     let data = leaderToday;
     if (curLeaderTab === 'week') data = leaderWeek;
     else if (curLeaderTab === 'month') data = leaderMonth;
@@ -3402,6 +3442,14 @@
     localStorage.setItem('cosmic_leader_month', JSON.stringify(leaderMonth));
     localStorage.setItem('cosmic_leader_all', JSON.stringify(leaderAllTime));
 
+    // 블랙홀을 완성한 판이면(source==='victory') 완성 시간도 별도 랭킹에 같이 기록
+    if (source === 'victory' && window.game && window.game.lastBhCompletionSeconds != null) {
+      leaderBHTime.push({ name: nick, seconds: window.game.lastBhCompletionSeconds, date: '2026.08' });
+      leaderBHTime.sort((a, b) => a.seconds - b.seconds);
+      localStorage.setItem('cosmic_leader_bhtime', JSON.stringify(leaderBHTime));
+      window.game.lastBhCompletionSeconds = null; // 중복 등록 방지
+    }
+
     alert(`🎉 [${nick}] 님의 점수 (${newScore.toLocaleString()}점) 가 글로벌 리더보드에 등록되었습니다!`);
     closeModal('gameOverModal');
     closeModal('cosmicVictoryModal');
@@ -3410,6 +3458,13 @@
 
   function escapeHTML(str) {
     return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag] || tag));
+  }
+
+  function formatMMSS(totalSeconds) {
+    const s = Math.max(0, Math.round(totalSeconds));
+    const m = Math.floor(s / 60);
+    const sec = s % 60;
+    return `${m}:${String(sec).padStart(2, '0')}`;
   }
 
   // 8. 11종 초고해상도 천체 렌더러 (정통 우주 셰이더)
@@ -3658,6 +3713,8 @@
       this.isGameOver = false;
       this.screenShake = 0;
       this.vortexTimer = 0;
+      this.gameStartTime = null; // 첫 드롭 시점에 기록 (블랙홀 완성 타임 보너스 계산용)
+      this.lastBhCompletionSeconds = null;
 
       this.init();
     }
@@ -4072,6 +4129,7 @@
     drop(vx = 0, vy = 3.0) {
       if (!this.canDrop || this.isGameOver || this.activeMode) return;
       this.canDrop = false;
+      if (!this.gameStartTime) this.gameStartTime = Date.now(); // 첫 드롭부터 시간 측정 시작 (메뉴 구경 시간은 제외)
 
       cosmicStats.totalDrops = (cosmicStats.totalDrops || 0) + 1;
       unlockAchievement('first_drop');
@@ -4353,6 +4411,8 @@
       this.warningTimer = 0;
       this.dangerGraceTimer = 0;
       this.isGameOver = false;
+      this.gameStartTime = null;
+      this.lastBhCompletionSeconds = null;
       this.tripleMergeCount = 0;
       this.maxTierReached = 0;
       this.usedSkillsThisGame = { bomb: false, shake: false, magnet: false, joker: false };
@@ -4522,6 +4582,15 @@
           const finaleBonus = Math.round((bhRes.baseScore + sing.suckedScore) * feverMult * bhRes.masterFinalMult);
           this.score += finaleBonus;
 
+          // ⏱️ 타임 보너스: 블랙홀을 빨리 완성할수록 추가 점수. 90초 밑으로는 오히려 계수가
+          // 더 커지도록 컷 없이 이어지지만(감으로 막 내려도 빠르면 그만큼 보상), 러시형 최고
+          // 기록도 콤보형 최저 기록보다 항상 낮게 나오도록 계수를 잡아뒀다 — 한쪽 플레이
+          // 스타일만 압도적으로 유리해지지 않게 하는 게 목적.
+          const elapsedSeconds = this.gameStartTime ? Math.round((Date.now() - this.gameStartTime) / 1000) : 0;
+          const timeBonus = Math.max(0, Math.round(150000 - (elapsedSeconds - 90) * 200));
+          this.score += timeBonus;
+          this.lastBhCompletionSeconds = elapsedSeconds;
+
           // 은하 대통일(블랙홀 피날레) 보상까지 지급된 시점에 게임을 완전히 종료한다.
           // (기존에는 이 플래그가 없어서 모달을 닫고 나면 블랙홀만 남은 채로 게임이 계속되고,
           //  이후 자연 게임오버가 한 번 더 발생해 리더보드에 중복 등록되는 문제가 있었음)
@@ -4566,7 +4635,7 @@
 
           // 1초 후 은하 대통일 피날레 모달 팝업!
           setTimeout(() => {
-            this.triggerCosmicVictory(sing.suckedCount, finaleBonus, coinEarned, finalR);
+            this.triggerCosmicVictory(sing.suckedCount, finaleBonus, coinEarned, finalR, elapsedSeconds, timeBonus);
           }, 1100);
         }
       }
@@ -5006,12 +5075,14 @@
       this.showChainBanner(`🌌 초신성 블랙홀 탄생! 온 우주의 모든 천체를 흡수합니다! 🌀`);
     }
 
-    triggerCosmicVictory(suckedCount, finaleBonus, coinEarned, finalR) {
+    triggerCosmicVictory(suckedCount, finaleBonus, coinEarned, finalR, elapsedSeconds = 0, timeBonus = 0) {
       document.getElementById('victoryFinalScore').textContent = this.score.toLocaleString();
       document.getElementById('victorySuckedCount').textContent = `${suckedCount}개 천체 올 클리어`;
       document.getElementById('victoryBonusScore').textContent = `+${finaleBonus.toLocaleString()}점`;
       document.getElementById('victoryBlackHoleR').textContent = `반지름 ${finalR}px (초거대화)`;
       document.getElementById('victoryCoins').textContent = `+${coinEarned} ✨`;
+      document.getElementById('victoryPlayTime').textContent = formatMMSS(elapsedSeconds);
+      document.getElementById('victoryTimeBonus').textContent = `+${timeBonus.toLocaleString()}점`;
 
       const nickInput = document.getElementById('victoryPlayerNickname');
       if (nickInput) nickInput.value = localStorage.getItem('cosmic_player_nick') || '';
