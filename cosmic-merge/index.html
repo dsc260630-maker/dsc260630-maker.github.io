@@ -3634,7 +3634,15 @@
 
     init() {
       this.resize();
+      // 브라우저 확대/축소(Ctrl+휠) 등으로 게임 영역 크기가 바뀌었는데
+      // window의 resize 이벤트가 안 잡히는 경우가 있어서, 캔버스 해상도가
+      // 실제 표시 크기와 어긋나며 행성이 찌그러져 보이는 문제가 있었다.
+      // ResizeObserver는 원인과 무관하게 요소 자체의 박스 크기 변화를
+      // 직접 감지하므로 이 문제를 근본적으로 해결한다.
       window.addEventListener('resize', () => this.resize());
+      if (typeof ResizeObserver !== 'undefined') {
+        new ResizeObserver(() => this.resize()).observe(this.area);
+      }
 
       const savedNick = localStorage.getItem('cosmic_player_nick') || '';
       if (savedNick) document.getElementById('playerNickname').value = savedNick;
