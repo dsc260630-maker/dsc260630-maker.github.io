@@ -47,6 +47,11 @@ const STANDALONE_GAME_URLS = {
   '코스믹 머지 : 블랙홀의 위엄': 'cosmic-merge/index.html',
 };
 
+// DSC 오리지널 게임은 기본 게임들의 라인 아이콘 대신, 게임 내 좌상단 로고 이미지를 컬러 썸네일로 사용한다
+const ORIGINAL_THUMBNAILS = {
+  '코스믹 머지 : 블랙홀의 위엄': 'cosmic-merge/assets/blackhole_logo.jpg',
+};
+
 const GAME_ICONS = {
   '벽돌깨기': '<rect x="3" y="4" width="6" height="3"/><rect x="10" y="4" width="6" height="3"/><rect x="17" y="4" width="4" height="3"/><rect x="5" y="9" width="6" height="3"/><rect x="12" y="9" width="6" height="3"/><circle cx="12" cy="18" r="2"/>',
   '업 다운 숫자 맞추기 !': '<path d="M12 3v7"/><path d="M8 7l4-4 4 4"/><path d="M12 21v-7"/><path d="M8 17l4 4 4-4"/>',
@@ -211,7 +216,9 @@ function renderGrid() {
       ${games.map(g => `
         <article class="game-card" data-id="${g.id}" tabindex="0">
           <div class="card-thumb">
-            <svg class="icon" viewBox="0 0 24 24">${getGameThumbIcon(g)}</svg>
+            ${ORIGINAL_THUMBNAILS[g.title]
+              ? `<img src="${ORIGINAL_THUMBNAILS[g.title]}" alt="${g.title}" loading="lazy">`
+              : `<svg class="icon" viewBox="0 0 24 24">${getGameThumbIcon(g)}</svg>`}
           </div>
           <div class="card-body">
             <span class="tag">${g.category}</span>
