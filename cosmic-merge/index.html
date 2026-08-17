@@ -3942,31 +3942,32 @@
       const tier = data.tier || 'bronze';
       const lv = data.level || 0;
 
-      // 피버 지속시간은 기존 대비 2배로 상향 (전략적으로 아껴 썼다가 몰아 터뜨리는 맛을 살리기 위함)
+      // 지속시간은 원래대로(연구 트리랑 겹치면 너무 길어짐), 대신 피버 중 점수 배율을 2배로 상향
+      // — "귀하지만 짧고, 대신 터뜨리면 확실하게 크게" 쪽으로.
       let chargeBoost = 1.0;
-      let durationFrames = 1200; // 20초
-      let multiplier = 3.0;
+      let durationFrames = 600; // 10초
+      let multiplier = 6.0;
 
       if (tier === 'bronze') {
         if (lv >= 1) chargeBoost = 1.15;
-        if (lv >= 2) durationFrames = 1380; // 23초
-        if (lv >= 3) multiplier = 3.3;
+        if (lv >= 2) durationFrames = 690; // 11.5초
+        if (lv >= 3) multiplier = 6.6;
       } else if (tier === 'silver') {
-        chargeBoost = 1.15; durationFrames = 1380; multiplier = 3.3;
+        chargeBoost = 1.15; durationFrames = 690; multiplier = 6.6;
         if (lv >= 1) chargeBoost = 1.25;
-        if (lv >= 2) durationFrames = 1500; // 25초
-        if (lv >= 3) multiplier = 3.7;
+        if (lv >= 2) durationFrames = 750; // 12.5초
+        if (lv >= 3) multiplier = 7.4;
         if (lv >= 4) chargeBoost = 1.35;
-        if (lv >= 5) durationFrames = 1620; // 27초
+        if (lv >= 5) durationFrames = 810; // 13.5초
       } else if (tier === 'gold') {
-        chargeBoost = 1.35; durationFrames = 1620; multiplier = 3.7;
+        chargeBoost = 1.35; durationFrames = 810; multiplier = 7.4;
         if (lv >= 1) chargeBoost = 1.45;
-        if (lv >= 2) durationFrames = 1740; // 29초
-        if (lv >= 3) multiplier = 4.2;
+        if (lv >= 2) durationFrames = 870; // 14.5초
+        if (lv >= 3) multiplier = 8.4;
         if (lv >= 4) chargeBoost = 1.55;
-        if (lv >= 5) durationFrames = 1860; // 31초
-        if (lv >= 6) multiplier = 4.6;
-        if (lv >= 7) multiplier = 5.2;
+        if (lv >= 5) durationFrames = 930; // 15.5초
+        if (lv >= 6) multiplier = 9.2;
+        if (lv >= 7) multiplier = 10.4;
       }
 
       return { tier, lv, chargeBoost, durationFrames, multiplier };
