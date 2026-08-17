@@ -2260,21 +2260,20 @@
   });
 
   // 2. 100% 정통 우주 천체 11단계 데이터베이스
-  // 행성 반지름은 원래(기존) 값 그대로. 태양이 판 높이의 70%를 차지하게 만드는 건
-  // 행성 크기가 아니라 GAME_LOGICAL_H(판 높이) 쪽에서 조절한다 — 행성을 키우면 가로 폭까지
-  // 같이 커져서 여러 행성이 옆으로 겹치며 진행 자체가 안 되는 문제가 있었음.
+  // 반지름은 기존 값에서 전체적으로 10% 키운 값. 금성은 수성/토성과 색이 너무 비슷해서
+  // (다 노란/주황 계열) 라이트 핑크로 교체 — 팔레트에 없던 색이라 확실히 구분됨.
   const TIERS = [
-    { name: '소행성', r: 15, mass: 1.0, score: 2, color: '#a4b0be', glow: 'rgba(189,195,199,0.4)', emoji: '🌑', fact: '태양계 형성 초기의 암석 파편입니다.' },
-    { name: '달', r: 21, mass: 1.8, score: 4, color: '#ffffff', glow: 'rgba(236,240,241,0.5)', emoji: '🌕', fact: '지구의 유일한 자연 위성이며 조석 간만의 차를 만듭니다.' },
-    { name: '수성', r: 27, mass: 3.2, score: 8, color: '#fa8231', glow: 'rgba(230,126,34,0.5)', emoji: '🪐', fact: '태양과 가장 가까우며 낮과 밤의 온도 차가 600도에 달합니다.' },
-    { name: '화성', r: 34, mass: 5.5, score: 16, color: '#ee5253', glow: 'rgba(235,77,75,0.6)', emoji: '🔴', fact: '표면의 산화철(녹) 때문에 붉게 빛나는 행성입니다.' },
-    { name: '금성', r: 42, mass: 8.5, score: 32, color: '#feca57', glow: 'rgba(249,202,36,0.6)', emoji: '🟡', fact: '온실효과로 인해 태양계에서 표면 온도가 가장 뜨겁습니다.' },
-    { name: '지구', r: 51, mass: 13.0, score: 64, color: '#0984e3', glow: 'rgba(34,166,179,0.7)', emoji: '🌍', fact: '액체 상태의 물과 생명체가 존재하는 푸른 보석입니다.' },
-    { name: '해왕성', r: 61, mass: 19.0, score: 128, color: '#3742fa', glow: 'rgba(72,52,212,0.7)', emoji: '🔵', fact: '시속 2,000km가 넘는 태양계 최강의 폭풍이 붑니다.' },
-    { name: '토성', r: 72, mass: 28.0, score: 256, color: '#f39c12', glow: 'rgba(240,147,43,0.7)', emoji: '🪐', fact: '얼음과 암석으로 이루어진 화려한 고리를 자랑합니다.' },
-    { name: '목성', r: 84, mass: 40.0, score: 512, color: '#e17055', glow: 'rgba(224,86,253,0.8)', emoji: '🟠', fact: '지구 1,300개가 들어가는 태양계 최대의 거인입니다.' },
-    { name: '태양', r: 98, mass: 60.0, score: 1024, color: '#ff4757', glow: 'rgba(255,121,63,0.9)', emoji: '☀️', fact: '핵융합으로 빛과 열을 내뿜는 태양계의 중심 항성입니다.' },
-    { name: '초신성 블랙홀', r: 114, mass: 250.0, score: 3000, color: '#00f2fe', glow: 'rgba(0,242,254,1.0)', emoji: '🌀', fact: '시공간의 특이점이며 주변 천체를 강력한 중력으로 빨아들입니다.' }
+    { name: '소행성', r: 17, mass: 1.0, score: 2, color: '#a4b0be', glow: 'rgba(189,195,199,0.4)', emoji: '🌑', fact: '태양계 형성 초기의 암석 파편입니다.' },
+    { name: '달', r: 23, mass: 1.8, score: 4, color: '#ffffff', glow: 'rgba(236,240,241,0.5)', emoji: '🌕', fact: '지구의 유일한 자연 위성이며 조석 간만의 차를 만듭니다.' },
+    { name: '수성', r: 30, mass: 3.2, score: 8, color: '#fa8231', glow: 'rgba(230,126,34,0.5)', emoji: '🪐', fact: '태양과 가장 가까우며 낮과 밤의 온도 차가 600도에 달합니다.' },
+    { name: '화성', r: 37, mass: 5.5, score: 16, color: '#ee5253', glow: 'rgba(235,77,75,0.6)', emoji: '🔴', fact: '표면의 산화철(녹) 때문에 붉게 빛나는 행성입니다.' },
+    { name: '금성', r: 46, mass: 8.5, score: 32, color: '#ff9ff3', glow: 'rgba(255,159,243,0.6)', emoji: '🟡', fact: '온실효과로 인해 태양계에서 표면 온도가 가장 뜨겁습니다.' },
+    { name: '지구', r: 56, mass: 13.0, score: 64, color: '#0984e3', glow: 'rgba(34,166,179,0.7)', emoji: '🌍', fact: '액체 상태의 물과 생명체가 존재하는 푸른 보석입니다.' },
+    { name: '해왕성', r: 67, mass: 19.0, score: 128, color: '#3742fa', glow: 'rgba(72,52,212,0.7)', emoji: '🔵', fact: '시속 2,000km가 넘는 태양계 최강의 폭풍이 붑니다.' },
+    { name: '토성', r: 79, mass: 28.0, score: 256, color: '#f39c12', glow: 'rgba(240,147,43,0.7)', emoji: '🪐', fact: '얼음과 암석으로 이루어진 화려한 고리를 자랑합니다.' },
+    { name: '목성', r: 92, mass: 40.0, score: 512, color: '#e17055', glow: 'rgba(224,86,253,0.8)', emoji: '🟠', fact: '지구 1,300개가 들어가는 태양계 최대의 거인입니다.' },
+    { name: '태양', r: 108, mass: 60.0, score: 1024, color: '#ff4757', glow: 'rgba(255,121,63,0.9)', emoji: '☀️', fact: '핵융합으로 빛과 열을 내뿜는 태양계의 중심 항성입니다.' },
+    { name: '초신성 블랙홀', r: 125, mass: 250.0, score: 3000, color: '#00f2fe', glow: 'rgba(0,242,254,1.0)', emoji: '🌀', fact: '시공간의 특이점이며 주변 천체를 강력한 중력으로 빨아들입니다.' }
   ];
 
   // 3. 스타 코인 & 인벤토리 데이터 관리자 (신규 유저 기본 100 ✨ 지급)
@@ -3486,9 +3485,9 @@
       ctx.beginPath(); ctx.arc(0, -r*0.82, r*0.32, 0, Math.PI*2); ctx.fill();
 
     } else if (level === 4) {
-      // 금성
+      // 금성 — 수성/토성과 색이 겹치던 노란/주황 계열 대신 라이트 핑크로 변경
       const grad = ctx.createRadialGradient(-r*0.35, -r*0.35, r*0.08, 0, 0, r);
-      grad.addColorStop(0, '#fff200'); grad.addColorStop(0.55, '#f39c12'); grad.addColorStop(1, '#962d00');
+      grad.addColorStop(0, '#ffe3fb'); grad.addColorStop(0.55, '#ff9ff3'); grad.addColorStop(1, '#7a1f6e');
       ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(0, 0, r, 0, Math.PI * 2); ctx.fill();
 
       ctx.save(); ctx.rotate(angle * 0.4);
@@ -4471,14 +4470,14 @@
             b.vy = b.vy * 0.65 + (dy / dist) * pullSpeed + (dx / dist) * swirlSpeed;
 
             // 블랙홀 사건의 지평선에 근접 시 압축 스케일링
-            const eventHorizonDist = (bh ? bh.r : 114) + 40;
+            const eventHorizonDist = (bh ? bh.r : 125) + 40;
             if (dist < eventHorizonDist) {
               b.scaleX = Math.max(0.06, (dist - 10) / eventHorizonDist);
               b.scaleY = b.scaleX;
             }
 
             // 중심 특이점에 닿아 완전 소멸 & 블랙홀 실시간 거대화!
-            if (dist < ((bh ? bh.r : 114) * 0.70) || dist < 45 || b.scaleX <= 0.12) {
+            if (dist < ((bh ? bh.r : 125) * 0.70) || dist < 45 || b.scaleX <= 0.12) {
               const bhRes = this.getBlackHoleResearch();
               sing.suckedCount++;
               const planetScore = (b.level < TIERS.length && TIERS[b.level]) ? TIERS[b.level].score : 10;
@@ -4536,7 +4535,7 @@
           const coinEarned = Math.round((100 + (sing.suckedCount || 0) * 10) * (bhRes.dustBoost || 1.0));
           addCoins(coinEarned, sing.x, sing.y - 30);
 
-          const finalR = bh ? Math.round(bh.r) : 114;
+          const finalR = bh ? Math.round(bh.r) : 125;
 
           // 축하 폭죽 파티클
           for (let k = 0; k < 60; k++) {
@@ -5065,7 +5064,7 @@
         const sing = this.activeSingularity;
         const time = Date.now() * 0.006;
         const bh = sing.blackHoleBody;
-        const curR = bh ? bh.r : 114;
+        const curR = bh ? bh.r : 125;
 
         ctx.save();
         ctx.translate(sing.x, sing.y);
