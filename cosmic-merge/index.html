@@ -307,6 +307,36 @@
     box-shadow: 0 0 8px rgba(255, 118, 117, 0.8);
     transition: width 0.2s ease-out;
   }
+  /* 피버 발동 중: 게이지가 남은 시간만큼 점점 줄어들며(드레인), 충전 중과는 다른
+     불타는 느낌의 색으로 바뀌어서 지금이 "다른 국면"이라는 게 한눈에 보이게 한다 */
+  .fever-fill.fever-draining {
+    background: linear-gradient(90deg, #ff3838, #ff9f1a, #ffd700, #ff3838);
+    background-size: 300% 100%;
+    animation: feverDrainShimmer 0.9s linear infinite;
+    box-shadow: 0 0 14px rgba(255, 56, 56, 0.9);
+    transition: width 1s linear;
+  }
+  @keyframes feverDrainShimmer {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 100% 0%; }
+  }
+  /* 게이지가 100% 차서 피버가 막 시작되는 순간의 임팩트 있는 플래시 연출 */
+  .fever-container.fever-burst .fever-track {
+    animation: feverBurstFlash 0.55s ease-out;
+  }
+  @keyframes feverBurstFlash {
+    0% { box-shadow: 0 0 0 rgba(255,255,255,0); transform: scale(1); }
+    25% { box-shadow: 0 0 26px 7px rgba(255,255,255,0.95); transform: scale(1.1); }
+    100% { box-shadow: 0 0 0 rgba(255,255,255,0); transform: scale(1); }
+  }
+  .fever-container.fever-burst .fever-label {
+    animation: feverLabelPop 0.55s ease-out;
+  }
+  @keyframes feverLabelPop {
+    0% { transform: scale(1); color: #ff7675; }
+    30% { transform: scale(1.35); color: #ffd700; }
+    100% { transform: scale(1); color: #ff7675; }
+  }
 
   /* 2. 중앙 게임 캔버스 영역 — 실제 게임 화면 크기(가로세로 비율)는 화면 크기와 무관하게
      항상 고정(GAME_LOGICAL_W x GAME_LOGICAL_H)이며, 브라우저/화면 크기에 따라 이 고정 비율
@@ -3340,11 +3370,11 @@
   // ⏱️ 블랙홀 완성 시간 랭킹 — 점수와 별개로, 얼마나 빨리 블랙홀을 완성했는지만 따로 기록.
   // 사이트(Supabase) 랭킹과는 무관하게 게임 자체 로컬 랭킹에만 존재한다.
   let defaultLeaderBHTime = [
-    { name: 'SpeedNova', seconds: 95, date: '2026.08' },
-    { name: 'QuickPulsar', seconds: 118, date: '2026.08' },
-    { name: 'RushRunner', seconds: 142, date: '2026.08' },
-    { name: 'FastOrbit', seconds: 176, date: '2026.08' },
-    { name: 'SwiftComet', seconds: 210, date: '2026.08' }
+    { name: 'SpeedNova', seconds: 495, date: '2026.08' },
+    { name: 'QuickPulsar', seconds: 580, date: '2026.08' },
+    { name: 'RushRunner', seconds: 650, date: '2026.08' },
+    { name: 'FastOrbit', seconds: 740, date: '2026.08' },
+    { name: 'SwiftComet', seconds: 845, date: '2026.08' }
   ];
 
   let leaderToday = JSON.parse(localStorage.getItem('cosmic_leader_today') || JSON.stringify(defaultLeaderboardToday));
@@ -3954,14 +3984,21 @@
       const fill = document.getElementById('feverFill');
       const label = document.getElementById('feverLabel');
       const gameStageEl = document.getElementById('gameStage');
-      fill.style.width = `${this.feverGauge}%`;
 
       const fRes = this.getFeverResearch();
       if (this.isFeverActive) {
         gameStageEl.classList.add('fever-active');
+        fill.classList.add('fever-draining');
+        // 피버 중에는 게이지가 꽉 찬 채로 멈춰있지 않고, 남은 시간 비율만큼 서서히 줄어든다
+        const remainPct = this.feverDurationTotal
+          ? Math.max(0, Math.min(100, (this.feverDuration / this.feverDurationTotal) * 100))
+          : 0;
+        fill.style.width = `${remainPct}%`;
         label.textContent = `🔥 FEVER x${fRes.multiplier.toFixed(1)} (${Math.ceil(this.feverDuration / 60)}s)`;
       } else {
         gameStageEl.classList.remove('fever-active');
+        fill.classList.remove('fever-draining');
+        fill.style.width = `${this.feverGauge}%`;
         label.textContent = `🔥 FEVER (${Math.round(this.feverGauge)}%)`;
       }
     }
@@ -3981,10 +4018,18 @@
       const fRes = this.getFeverResearch();
       this.isFeverActive = true;
       this.feverDuration = fRes.durationFrames;
+      this.feverDurationTotal = fRes.durationFrames; // 게이지 드레인 비율 계산 기준값(스냅샷)
       cosmicAudio.playFeverStart();
       this.screenShake = 12;
       this.showChainBanner(`🔥 FEVER TIME x${fRes.multiplier.toFixed(1)} ACTIVATED! 🔥`);
-      
+
+      // 게이지가 꽉 차서 피버가 터지는 순간의 플래시 연출
+      const feverContainerEl = document.querySelector('.fever-container');
+      if (feverContainerEl) {
+        feverContainerEl.classList.add('fever-burst');
+        setTimeout(() => feverContainerEl.classList.remove('fever-burst'), 550);
+      }
+
       cosmicStats.feverCount = (cosmicStats.feverCount || 0) + 1;
       unlockAchievement('fever_time');
       if (cosmicStats.feverCount >= 5) unlockAchievement('fever_5');
