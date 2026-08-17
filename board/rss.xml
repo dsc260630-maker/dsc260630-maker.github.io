@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+<channel>
+  <title>DSC GAMES 게시판</title>
+  <link>https://dsc260630-maker.github.io/board/</link>
+  <description>DSC GAMES의 공지사항, 게임소식, 게임공략을 다루는 게시판입니다.</description>
+  <language>ko</language>
+  <atom:link href="https://dsc260630-maker.github.io/board/rss.xml" rel="self" type="application/rss+xml" />
+  <item>
+    <title>코스믹 머지 : 블랙홀의 위엄 완벽 공략</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-17-cosmic-merge-guide.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-17-cosmic-merge-guide.html</guid>
+    <pubDate>Mon, 17 Aug 2026 00:00:00 +0900</pubDate>
+    <category>DSC 오리지널</category>
+    <description>DSC GAMES 첫 오리지널 게임 코스믹 머지(코머블) 소개와 고득점 공략. 중력으로 움직이는 동적인 머지 퍼즐, 블랙홀 피날레 전략, 피버 타임 콤보 타이밍, 연구소 업그레이드와 아이템 활용법까지 정리했습니다.</description>
+  </item>
+  <item>
+    <title>2026년 7월 PC방 게임 순위 정리</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-15-pcbang-ranking-2026-07.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-15-pcbang-ranking-2026-07.html</guid>
+    <pubDate>Sat, 15 Aug 2026 00:00:00 +0900</pubDate>
+    <category>순위</category>
+    <description>2026년 7월 국내 PC방 주간 순위 동향. 발로란트가 VCT 퍼시픽 스테이지2 영향으로 이용 시간이 크게 늘었습니다.</description>
+  </item>
+  <item>
+    <title>갤럭시 슈팅, 웨이브 사이 소강 구간 활용하기</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-14-game-galaxy-shooter.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-14-game-galaxy-shooter.html</guid>
+    <pubDate>Fri, 14 Aug 2026 00:00:00 +0900</pubDate>
+    <category>슈팅</category>
+    <description>DSC GAMES의 갤럭시 슈팅 게임 규칙과, 웨이브 사이 소강 구간을 활용해 오래 살아남는 팁을 소개합니다.</description>
+  </item>
+  <item>
+    <title>스페이스 슈터, 화면 하단 안전지대 활용법</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-13-game-space-shooter.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-13-game-space-shooter.html</guid>
+    <pubDate>Thu, 13 Aug 2026 00:00:00 +0900</pubDate>
+    <category>슈팅</category>
+    <description>DSC GAMES의 스페이스 슈터 게임 규칙과, 화면 하단 안전지대를 활용해 고득점을 내는 팁을 소개합니다.</description>
+  </item>
+  <item>
+    <title>2026년 7월 모바일 게임 순위 정리</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-12-mobile-game-ranking-2026-07.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-12-mobile-game-ranking-2026-07.html</guid>
+    <pubDate>Wed, 12 Aug 2026 00:00:00 +0900</pubDate>
+    <category>순위</category>
+    <description>모바일인덱스 기준 2026년 7월 국내 모바일 게임 사용자·매출 순위. 사용자 1위는 로블록스, 매출 1위는 SOL이 차지했습니다.</description>
+  </item>
+  <item>
+    <title>코인 레이싱, 코인보다 장애물 회피가 먼저다</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-12-game-coin-racing.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-12-game-coin-racing.html</guid>
+    <pubDate>Wed, 12 Aug 2026 00:00:00 +0900</pubDate>
+    <category>레이싱</category>
+    <description>DSC GAMES의 코인 레이싱 게임 규칙과, 코인을 모으면서도 장애물을 안전하게 피하는 팁을 소개합니다.</description>
+  </item>
+  <item>
+    <title>커브 도로 레이싱, 커브 진입 전 미리 방향 트는 법</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-11-game-curve-racing.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-11-game-curve-racing.html</guid>
+    <pubDate>Tue, 11 Aug 2026 00:00:00 +0900</pubDate>
+    <category>레이싱</category>
+    <description>DSC GAMES의 커브 도로 레이싱 게임 규칙과, 커브 구간에서 오래 살아남는 조작 팁을 소개합니다.</description>
+  </item>
+  <item>
+    <title>컬러 채우기, 턴을 아끼는 색 선택 순서</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-10-game-flood-fill.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-10-game-flood-fill.html</guid>
+    <pubDate>Mon, 10 Aug 2026 00:00:00 +0900</pubDate>
+    <category>전략</category>
+    <description>DSC GAMES의 컬러 채우기(플러드필) 게임 규칙과, 정해진 턴 안에 클리어하는 색 선택 요령을 소개합니다.</description>
+  </item>
+  <item>
+    <title>틱택토 vs AI, 중앙 선점과 이중 위협으로 이기기</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-10-game-tictactoe-ai.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-10-game-tictactoe-ai.html</guid>
+    <pubDate>Mon, 10 Aug 2026 00:00:00 +0900</pubDate>
+    <category>전략</category>
+    <description>DSC GAMES의 틱택토 vs AI 게임 규칙과, 중앙 선점·이중 위협으로 AI를 이기는 전략을 소개합니다.</description>
+  </item>
+  <item>
+    <title>2026년 7월 스팀 게임 순위 정리</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-09-steam-ranking-2026-07.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-09-steam-ranking-2026-07.html</guid>
+    <pubDate>Sun, 09 Aug 2026 00:00:00 +0900</pubDate>
+    <category>순위</category>
+    <description>2026년 7월 스팀 월간 평균 동시접속자 순위. 팰월드 1.0 정식 출시 효과로 팰월드가 3위까지 올라왔습니다.</description>
+  </item>
+  <item>
+    <title>풍선 터뜨리기, 놓치지 않고 고득점 내는 순서</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-09-game-balloon-pop.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-09-game-balloon-pop.html</guid>
+    <pubDate>Sun, 09 Aug 2026 00:00:00 +0900</pubDate>
+    <category>캐주얼</category>
+    <description>DSC GAMES의 풍선 터뜨리기 게임 규칙과, 풍선을 놓치지 않고 고득점을 내는 처리 순서를 소개합니다.</description>
+  </item>
+  <item>
+    <title>카드 짝맞추기, 이동 횟수 줄이는 암기 요령</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-08-game-memory-match.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-08-game-memory-match.html</guid>
+    <pubDate>Sat, 08 Aug 2026 00:00:00 +0900</pubDate>
+    <category>퍼즐</category>
+    <description>DSC GAMES의 카드 짝맞추기 게임 규칙과, 이동 횟수를 줄여 고득점을 내는 암기 요령을 소개합니다.</description>
+  </item>
+  <item>
+    <title>클릭 스피드 챌린지, 10초 안에 클릭 수 늘리는 법</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-08-game-click-speed.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-08-game-click-speed.html</guid>
+    <pubDate>Sat, 08 Aug 2026 00:00:00 +0900</pubDate>
+    <category>캐주얼</category>
+    <description>DSC GAMES의 클릭 스피드 챌린지 게임 규칙과, 10초 안에 클릭 수를 최대한 늘리는 팁을 소개합니다.</description>
+  </item>
+  <item>
+    <title>점프 러너, 타이밍만 알면 오래 살아남는다</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-07-game-jump-runner.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-07-game-jump-runner.html</guid>
+    <pubDate>Fri, 07 Aug 2026 00:00:00 +0900</pubDate>
+    <category>액션</category>
+    <description>DSC GAMES의 점프 러너 게임 규칙과, 장애물 점프 타이밍을 미리 계산해 오래 살아남는 팁을 소개합니다.</description>
+  </item>
+  <item>
+    <title>2026년 6월 PC방 게임 순위 정리</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-06-pcbang-ranking-2026-06.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-06-pcbang-ranking-2026-06.html</guid>
+    <pubDate>Thu, 06 Aug 2026 00:00:00 +0900</pubDate>
+    <category>순위</category>
+    <description>게임트릭스 기준 2026년 6월 국내 PC방 점유율 순위. 리그 오브 레전드가 여전히 압도적 1위를 지켰습니다.</description>
+  </item>
+  <item>
+    <title>벽돌깨기 공략: 패들 각도로 원하는 벽돌 노리기</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-06-game-breakout.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-06-game-breakout.html</guid>
+    <pubDate>Thu, 06 Aug 2026 00:00:00 +0900</pubDate>
+    <category>액션</category>
+    <description>DSC GAMES의 벽돌깨기 게임 규칙과, 패들 각도를 이용해 고득점을 내는 공략 팁을 소개합니다.</description>
+  </item>
+  <item>
+    <title>업 다운 숫자 맞추기, 이진 탐색으로 7번 안에 맞히기</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-06-game-guess-number.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-06-game-guess-number.html</guid>
+    <pubDate>Thu, 06 Aug 2026 00:00:00 +0900</pubDate>
+    <category>퍼즐</category>
+    <description>DSC GAMES의 업 다운 숫자 맞추기 게임 규칙과, 이진 탐색으로 최소 시도 횟수에 도전하는 방법을 소개합니다.</description>
+  </item>
+  <item>
+    <title>색깔 기억하기, 몇 단계까지 갈 수 있을까</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-05-game-color-memory.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-05-game-color-memory.html</guid>
+    <pubDate>Wed, 05 Aug 2026 00:00:00 +0900</pubDate>
+    <category>캐주얼</category>
+    <description>DSC GAMES의 색깔 기억하기(사이먼 게임) 규칙과 기억력을 오래 유지하는 팁을 소개합니다.</description>
+  </item>
+  <item>
+    <title>타겟 슈팅 고득점 팁: 황금 타겟을 노려라</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-04-game-target-shooting.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-04-game-target-shooting.html</guid>
+    <pubDate>Tue, 04 Aug 2026 00:00:00 +0900</pubDate>
+    <category>슈팅</category>
+    <description>DSC GAMES의 타겟 슈팅 게임 규칙과 30초 안에 고득점을 내는 팁을 소개합니다. 일반 타겟과 황금 타겟의 점수 차이를 활용하세요.</description>
+  </item>
+  <item>
+    <title>두더지 잡기, 30초 안에 고득점 내는 법</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-04-game-whack-a-mole.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-04-game-whack-a-mole.html</guid>
+    <pubDate>Tue, 04 Aug 2026 00:00:00 +0900</pubDate>
+    <category>액션</category>
+    <description>DSC GAMES의 두더지 잡기 게임 규칙과 30초 제한시간 안에 최대한 많이 잡는 요령을 소개합니다.</description>
+  </item>
+  <item>
+    <title>2026년 6월 스팀 게임 순위 정리</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-03-steam-ranking-2026-06.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-03-steam-ranking-2026-06.html</guid>
+    <pubDate>Mon, 03 Aug 2026 00:00:00 +0900</pubDate>
+    <category>순위</category>
+    <description>스팀 동시접속자 통계를 기준으로 정리한 2026년 6월 인기 게임 순위. 카운터-스트라이크 2, 도타 2, 이색적인 신흥 강자 TBH: Task Bar Hero까지 살펴봅니다.</description>
+  </item>
+  <item>
+    <title>3차선 카레이싱, 오래 살아남는 방법</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-03-game-lane-racing.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-03-game-lane-racing.html</guid>
+    <pubDate>Mon, 03 Aug 2026 00:00:00 +0900</pubDate>
+    <category>레이싱</category>
+    <description>DSC GAMES의 3차선 카레이싱 게임 규칙과 점점 빨라지는 속도 속에서 오래 살아남는 팁을 소개합니다.</description>
+  </item>
+  <item>
+    <title>미니 오목 공략: AI를 이기는 3가지 전략</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-02-game-mini-gomoku.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-02-game-mini-gomoku.html</guid>
+    <pubDate>Sun, 02 Aug 2026 00:00:00 +0900</pubDate>
+    <category>전략</category>
+    <description>DSC GAMES의 미니 오목 게임 규칙과 AI 상대를 이기기 위한 전략 팁 3가지를 소개합니다. 9x9 보드에서 5개를 먼저 연결하세요.</description>
+  </item>
+  <item>
+    <title>2048 미니 고득점 공략법</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-02-game-2048-mini.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-02-game-2048-mini.html</guid>
+    <pubDate>Sun, 02 Aug 2026 00:00:00 +0900</pubDate>
+    <category>퍼즐</category>
+    <description>DSC GAMES의 2048 미니 게임 규칙과 고득점을 위한 타일 정리 요령을 소개합니다. 4x4 보드에서 같은 숫자를 합쳐 더 큰 숫자를 만들어보세요.</description>
+  </item>
+  <item>
+    <title>2026년 6월 모바일 게임 순위 정리</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-14-mobile-game-ranking-2026-06.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-14-mobile-game-ranking-2026-06.html</guid>
+    <pubDate>Fri, 14 Aug 2026 00:00:00 +0900</pubDate>
+    <category>순위</category>
+    <description>센서타워 리포트를 바탕으로 정리한 2026년 6월 전세계 모바일 게임 매출·다운로드 순위. 화이트아웃 서바이벌, 로얄 매치, 왕자영요, 로블록스 등의 성적을 확인해보세요.</description>
+  </item>
+  <item>
+    <title>DSC GAMES를 오픈했습니다</title>
+    <link>https://dsc260630-maker.github.io/board/2026-08-01-gamebox-open.html</link>
+    <guid isPermaLink="true">https://dsc260630-maker.github.io/board/2026-08-01-gamebox-open.html</guid>
+    <pubDate>Sat, 01 Aug 2026 00:00:00 +0900</pubDate>
+    <category>소식</category>
+    <description>누구나 회원가입 없이 바로 즐길 수 있는 웹 게임 사이트, DSC GAMES를 오픈했습니다. 액션·퍼즐·캐주얼·전략·레이싱·슈팅 6개 카테고리, 18종의 게임을 소개합니다.</description>
+  </item>
+</channel>
+</rss>
