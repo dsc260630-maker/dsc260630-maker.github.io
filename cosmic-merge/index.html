@@ -54,7 +54,7 @@
   /* 1. 첫 화면: 게임 뷰포트 (100vh 내 완벽 피트) */
   .game-screen-wrapper {
     width: 100%;
-    max-width: 480px; /* GAME_LOGICAL_W(460) + 좌우 패딩(20px) */
+    max-width: 460px; /* GAME_LOGICAL_W(440) + 좌우 패딩(20px) */
     height: 100vh;
     height: 100dvh;
     padding: 6px 10px 6px;
@@ -3582,10 +3582,9 @@
 
   // 게임 논리 좌표계 고정 크기 — 브라우저 창/화면 크기가 달라도 게임 내부 좌표(중력, 행성 반지름,
   // 데드라인 위치 등)는 항상 이 기준으로 계산되고, #gameStage가 JS resize()에서 이 비율을
-  // 유지한 채 화면에 맞게 통째로 확대/축소된다. (태양 70% 비율 실험은 일단 보류 — 이전에
-  // 확정됐던 기준값으로 복구한 상태)
-  const GAME_LOGICAL_W = 460;
-  const GAME_LOGICAL_H = 557;
+  // 유지한 채 화면에 맞게 통째로 확대/축소된다.
+  const GAME_LOGICAL_W = 440;
+  const GAME_LOGICAL_H = 500;
 
   // 9. 메인 게임 클래스 (연쇄 콤보 & 블랙홀 중력 소용돌이 흡입)
   class CosmicGame {
@@ -3649,7 +3648,7 @@
       this.activeMode = null;
 
       this.mode = 'classic';
-      this.deadlineY = 47; // GAME_LOGICAL_H 축소 비율(557/835)에 맞춰 기존 70에서 비례 축소
+      this.deadlineY = 94; // 대기 중인 낙하 행성과 판 위 행성이 후반부에 너무 붙는 문제 완화를 위해 기존(47)의 2배로 확대
       this.warningTimer = 0;
       this.dangerGraceTimer = 0; // 스킬 사용 시 3초 안전 유예 타이머
       this.isGameOver = false;
