@@ -42,6 +42,11 @@ const GAME_SLUGS = {
   '보스 슈팅': 'boss-shooter',
 };
 
+// DSC 오리지널 게임은 /play/ 래퍼(샌드박스 iframe)를 거치지 않고 독립 페이지로 직접 연결한다
+const STANDALONE_GAME_URLS = {
+  '코스믹 머지 : 블랙홀의 위엄': 'cosmic-merge/index.html',
+};
+
 const GAME_ICONS = {
   '벽돌깨기': '<rect x="3" y="4" width="6" height="3"/><rect x="10" y="4" width="6" height="3"/><rect x="17" y="4" width="4" height="3"/><rect x="5" y="9" width="6" height="3"/><rect x="12" y="9" width="6" height="3"/><circle cx="12" cy="18" r="2"/>',
   '업 다운 숫자 맞추기 !': '<path d="M12 3v7"/><path d="M8 7l4-4 4 4"/><path d="M12 21v-7"/><path d="M8 17l4 4 4-4"/>',
@@ -225,6 +230,11 @@ function renderGrid() {
       const id = Number(card.dataset.id);
       const game = GAMES.find(g => g.id === id);
       if (!game) return;
+      const standaloneUrl = STANDALONE_GAME_URLS[game.title];
+      if (standaloneUrl) {
+        window.location.href = standaloneUrl;
+        return;
+      }
       const slug = GAME_SLUGS[game.title];
       if (!slug) {
         showToast('이 게임의 상세 페이지는 아직 준비 중이에요.');
