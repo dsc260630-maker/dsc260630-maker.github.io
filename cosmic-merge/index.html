@@ -66,6 +66,11 @@
     position: relative;
     user-select: none;
     -webkit-user-select: none;
+    /* 모바일에서 게임 화면 안을 빠르게 두 번 탭하면(더블탭 확대 제스처) 일부 브라우저가
+       탭한 지점을 보이게 하려고 페이지를 살짝 스크롤시켜, 아래 가이드 텍스트 쪽으로
+       화면이 밀리는 문제가 있었다. overscroll-behavior로 그 스크롤이 body까지 전파되는
+       것을 막는다 (더블탭 자체 차단은 아래 JS의 touchend 핸들러가 담당). */
+    overscroll-behavior: none;
   }
 
   .top-bar {
@@ -3944,6 +3949,20 @@
     }
 
     bindControls() {
+      // 모바일에서 게임 화면 안을 빠르게 두 번 탭하면 일부 브라우저(특히 iOS Safari)가
+      // viewport의 user-scalable=no를 무시하고 더블탭 확대 제스처를 실행하면서, 탭 지점을
+      // 보이게 하려고 페이지를 살짝 스크롤시킨다. 게임 화면 전체를 감싸는 wrapper 안에서는
+      // 이 제스처 자체를 무효화해서 막는다 (300ms 이내 연속 touchend = 더블탭으로 간주).
+      const screenWrapper = document.querySelector('.game-screen-wrapper');
+      if (screenWrapper) {
+        let lastTouchEnd = 0;
+        screenWrapper.addEventListener('touchend', (e) => {
+          const now = Date.now();
+          if (now - lastTouchEnd <= 300) e.preventDefault();
+          lastTouchEnd = now;
+        }, { passive: false });
+      }
+
       // 화면(#gameStage)이 실제로 몇 CSS px로 렌더링되는지와 무관하게, 포인터 좌표를 항상
       // 고정 논리 좌표(0~GAME_LOGICAL_W)로 환산한다. 이게 없으면 화면이 커지거나(레터박스로
       // 작게 보이거나) 할 때 드롭 위치/슬링샷 세기가 실제 손가락 이동량과 어긋나게 된다.
