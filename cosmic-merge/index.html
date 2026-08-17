@@ -4442,6 +4442,17 @@
           const feverMult = this.isFeverActive ? (fRes.multiplier / 2.0) : 1.0;
           const finaleBonus = Math.round((bhRes.baseScore + sing.suckedScore) * feverMult * bhRes.masterFinalMult);
           this.score += finaleBonus;
+
+          // 은하 대통일(블랙홀 피날레) 보상까지 지급된 시점에 게임을 완전히 종료한다.
+          // (기존에는 이 플래그가 없어서 모달을 닫고 나면 블랙홀만 남은 채로 게임이 계속되고,
+          //  이후 자연 게임오버가 한 번 더 발생해 리더보드에 중복 등록되는 문제가 있었음)
+          this.isGameOver = true;
+          if (this.score > this.highScore) {
+            this.highScore = this.score;
+            localStorage.setItem('cosmic_merge_highscore', this.highScore);
+          }
+          submitScoreToSite(this.score);
+
           const coinEarned = Math.round((100 + (sing.suckedCount || 0) * 10) * (bhRes.dustBoost || 1.0));
           addCoins(coinEarned, sing.x, sing.y - 30);
 
