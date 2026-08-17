@@ -303,12 +303,26 @@
     transition: width 0.2s ease-out;
   }
 
-  /* 2. 중앙 게임 캔버스 영역 (GPU 가속 & 피버 오로라 보더) */
+  /* 2. 중앙 게임 캔버스 영역 — 실제 게임 화면 크기(가로세로 비율)는 화면 크기와 무관하게
+     항상 고정(GAME_LOGICAL_W x GAME_LOGICAL_H)이며, 브라우저/화면 크기에 따라 이 고정 비율
+     박스 전체가 통째로 확대/축소될 뿐이다. #gameArea는 남는 공간에 그 박스를 가운데
+     정렬하는 역할만 하고, 실제 시각 스타일(테두리/글로우)과 좌표계 기준은 #gameStage가 가진다. */
   #gameArea {
-    position: relative;
     width: 100%;
     flex: 1;
     min-height: 280px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    touch-action: none;
+  }
+  #gameStage {
+    /* 실제 width/height는 JS resize()에서 GAME_LOGICAL_W:GAME_LOGICAL_H 비율을 유지한 채
+       #gameArea 안에 들어가는 최대 크기로 픽셀 단위로 직접 계산해서 넣는다 (letterbox 방식).
+       CSS의 aspect-ratio+flex 조합만으로는 "두 방향 중 더 좁은 쪽에 맞춰 축소"가 항상
+       정확히 보장되지 않아서(교차축이 stretch되는 경우가 있음) JS 계산 방식을 쓴다. */
+    position: relative;
+    flex-shrink: 0;
     background: #080a18;
     border-radius: 14px;
     border: 1px solid rgba(0, 242, 254, 0.25);
@@ -320,7 +334,7 @@
     will-change: transform;
     transition: border-color 0.3s, box-shadow 0.3s;
   }
-  #gameArea.fever-active {
+  #gameStage.fever-active {
     border-color: #ff3838;
     box-shadow: 0 0 35px rgba(255, 56, 56, 0.6), inset 0 0 25px rgba(255, 215, 0, 0.2);
     animation: feverBorderPulse 0.6s infinite alternate;
@@ -1303,9 +1317,11 @@
 
     <!-- 중앙 게임 캔버스 (대기 행성 시야 100% 확보) -->
     <div id="gameArea">
-      <div id="achievementToast"><span class="trophy-icon">🏆</span> <span id="toastText">업적 달성!</span></div>
-      <div id="deadlineAlert">⚠️ 위험! 초과 방출 5.0초 전</div>
-      <canvas id="gameCanvas"></canvas>
+      <div id="gameStage">
+        <div id="achievementToast"><span class="trophy-icon">🏆</span> <span id="toastText">업적 달성!</span></div>
+        <div id="deadlineAlert">⚠️ 위험! 초과 방출 5.0초 전</div>
+        <canvas id="gameCanvas"></canvas>
+      </div>
     </div>
 
     <!-- 하단 특수 아이템 스킬 툴바 (1~4키) -->
@@ -3561,10 +3577,18 @@
     ctx.restore();
   }
 
+  // 게임 논리 좌표계 고정 크기 — 브라우저 창/화면 크기가 달라도 게임 내부 좌표(중력, 행성 반지름,
+  // 데드라인 위치 등)는 항상 이 기준으로 계산되고, #gameStage가 CSS로 이 비율을 유지한 채
+  // 화면에 맞게 통째로 확대/축소된다. 값은 기존에 일반적인 데스크톱 창에서 실제로 렌더링되던
+  // 크기를 그대로 기준으로 잡아, 기존 난이도 튜닝(중력/낙하속도/데드라인 등)이 그대로 유지된다.
+  const GAME_LOGICAL_W = 418;
+  const GAME_LOGICAL_H = 835;
+
   // 9. 메인 게임 클래스 (연쇄 콤보 & 블랙홀 중력 소용돌이 흡입)
   class CosmicGame {
     constructor() {
       this.area = document.getElementById('gameArea');
+      this.stage = document.getElementById('gameStage');
       this.cvs = document.getElementById('gameCanvas');
       this.ctx = this.cvs.getContext('2d');
 
@@ -3679,16 +3703,30 @@
     }
 
     resize() {
+      // 게임의 논리 좌표계(물리 연산 기준 크기)는 화면/브라우저 크기와 무관하게 항상 고정.
+      // #gameStage의 실제 크기는 #gameArea(남는 공간) 안에 이 비율을 유지한 채 들어가는
+      // 최대 크기로 매번 다시 계산해서(letterbox 방식) 넣어준다 — 절대 넘치거나 찌그러지지 않음.
+      this.logicalWidth = GAME_LOGICAL_W;
+      this.logicalHeight = GAME_LOGICAL_H;
+
+      const areaRect = this.area.getBoundingClientRect();
+      const areaW = areaRect.width || GAME_LOGICAL_W;
+      const areaH = areaRect.height || GAME_LOGICAL_H;
+      const fitScale = Math.min(areaW / GAME_LOGICAL_W, areaH / GAME_LOGICAL_H);
+      const stageW = GAME_LOGICAL_W * fitScale;
+      const stageH = GAME_LOGICAL_H * fitScale;
+      this.stage.style.width = stageW + 'px';
+      this.stage.style.height = stageH + 'px';
+
       const dpr = Math.min(window.devicePixelRatio || 1, 1.6);
-      const w = this.area.clientWidth || 360;
-      const h = this.area.clientHeight || 460;
-      this.logicalWidth = w;
-      this.logicalHeight = h;
-      this.cvs.width = Math.round(w * dpr);
-      this.cvs.height = Math.round(h * dpr);
-      this.cvs.style.width = w + 'px';
-      this.cvs.style.height = h + 'px';
-      this.ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // 캔버스 내부 해상도는 실제 렌더링 크기 x DPR로(항상 선명하게), 논리 좌표는 고정된 채로 유지
+      this.cvs.width = Math.round(stageW * dpr);
+      this.cvs.height = Math.round(stageH * dpr);
+
+      // 논리 좌표(0~GAME_LOGICAL_W) 한 칸이 실제 캔버스 픽셀 몇 개에 대응하는지의 배율.
+      // 가로/세로 둘 다 같은 값 하나로 계산해서(비율이 항상 정확히 일치하므로) 절대 찌그러지지 않는다.
+      this.renderScale = (stageW * dpr) / GAME_LOGICAL_W;
+      this.ctx.setTransform(this.renderScale, 0, 0, this.renderScale, 0, 0);
 
       const nDpr = Math.min(window.devicePixelRatio || 1, 1.6);
       this.nextCvs.width = Math.round(40 * nDpr);
@@ -3852,15 +3890,15 @@
 
       const fill = document.getElementById('feverFill');
       const label = document.getElementById('feverLabel');
-      const gameArea = document.getElementById('gameArea');
+      const gameStageEl = document.getElementById('gameStage');
       fill.style.width = `${this.feverGauge}%`;
 
       const fRes = this.getFeverResearch();
       if (this.isFeverActive) {
-        gameArea.classList.add('fever-active');
+        gameStageEl.classList.add('fever-active');
         label.textContent = `🔥 FEVER x${fRes.multiplier.toFixed(1)} (${Math.ceil(this.feverDuration / 60)}s)`;
       } else {
-        gameArea.classList.remove('fever-active');
+        gameStageEl.classList.remove('fever-active');
         label.textContent = `🔥 FEVER (${Math.round(this.feverGauge)}%)`;
       }
     }
@@ -3904,22 +3942,29 @@
     }
 
     bindControls() {
+      // 화면(#gameStage)이 실제로 몇 CSS px로 렌더링되는지와 무관하게, 포인터 좌표를 항상
+      // 고정 논리 좌표(0~GAME_LOGICAL_W)로 환산한다. 이게 없으면 화면이 커지거나(레터박스로
+      // 작게 보이거나) 할 때 드롭 위치/슬링샷 세기가 실제 손가락 이동량과 어긋나게 된다.
+      const stageScale = () => GAME_LOGICAL_W / (this.stage.getBoundingClientRect().width || GAME_LOGICAL_W);
+
       const updatePos = (clientX) => {
-        const rect = this.area.getBoundingClientRect();
+        const rect = this.stage.getBoundingClientRect();
+        const scale = GAME_LOGICAL_W / (rect.width || GAME_LOGICAL_W);
         const t = TIERS[this.currentTier];
         const minX = t ? t.r + 6 : 20;
-        const maxX = t ? (this.logicalWidth || 360) - t.r - 6 : (this.logicalWidth || 360) - 20;
-        this.dropX = Math.max(minX, Math.min(maxX, clientX - rect.left));
+        const maxX = t ? this.logicalWidth - t.r - 6 : this.logicalWidth - 20;
+        this.dropX = Math.max(minX, Math.min(maxX, (clientX - rect.left) * scale));
       };
 
-      this.area.addEventListener('pointerdown', (e) => {
+      this.stage.addEventListener('pointerdown', (e) => {
         if (this.isGameOver) return;
         updatePos(e.clientX);
         cosmicAudio.init();
 
         if (this.activeMode === 'bomb') {
-          const rect = this.area.getBoundingClientRect();
-          this.useBomb(this.dropX, e.clientY - rect.top);
+          const rect = this.stage.getBoundingClientRect();
+          const scale = GAME_LOGICAL_W / (rect.width || GAME_LOGICAL_W);
+          this.useBomb(this.dropX, (e.clientY - rect.top) * scale);
           return;
         }
 
@@ -3930,10 +3975,11 @@
         this.slingshotVy = 0;
       });
 
-      this.area.addEventListener('pointermove', (e) => {
+      this.stage.addEventListener('pointermove', (e) => {
         if (this.isDragging) {
-          const dx = this.dragStartX - e.clientX;
-          const dy = e.clientY - this.dragStartY;
+          const scale = stageScale();
+          const dx = (this.dragStartX - e.clientX) * scale;
+          const dy = (e.clientY - this.dragStartY) * scale;
           if (dy > 15) {
             this.slingshotVx = Math.max(-8, Math.min(8, dx * 0.08));
             this.slingshotVy = Math.max(1, Math.min(8, dy * 0.06));
