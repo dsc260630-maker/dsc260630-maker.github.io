@@ -1777,10 +1777,79 @@
         cosmicDisplayName = '';
       }
       updateRankSubmitUI();
+      syncCosmicSaveOnAuthChange(cosmicUser ? cosmicUser.id : null);
     }
 
     sb.auth.onAuthStateChange(() => { refreshCosmicAuthState(); });
     refreshCosmicAuthState();
+
+    // ------------------------------------------------------------
+    // 게임 진행 데이터(우주먼지/인벤토리/연구소/퀘스트/업적/통계/도감/최고점수) 계정별 저장.
+    // 오디오 설정은 계정과 무관하게 기기별로 유지되도록 동기화 대상에서 제외한다.
+    // ------------------------------------------------------------
+    const COSMIC_PROGRESSION_KEYS = [
+      'cosmic_coins', 'cosmic_inventory', 'cosmic_research', 'cosmic_upgrades',
+      'cosmic_quests', 'cosmic_quest_date', 'cosmic_achievements', 'cosmic_achieve_claimed',
+      'cosmic_stats', 'cosmic_discovered', 'cosmic_lab_resets', 'cosmic_merge_highscore'
+    ];
+
+    function gatherProgressionBlob() {
+      const blob = {};
+      COSMIC_PROGRESSION_KEYS.forEach(k => {
+        const v = localStorage.getItem(k);
+        if (v != null) blob[k] = v;
+      });
+      return blob;
+    }
+
+    let lastSavedProgressionJSON = null;
+    async function saveCosmicCloudState() {
+      if (!cosmicUser) return;
+      const blob = gatherProgressionBlob();
+      const json = JSON.stringify(blob);
+      if (json === lastSavedProgressionJSON) return; // 변화 없으면 저장 생략
+      lastSavedProgressionJSON = json;
+      const { error } = await sb.from('cosmic_save').upsert({
+        user_id: cosmicUser.id, data: blob, updated_at: new Date().toISOString()
+      });
+      if (error) console.error('클라우드 저장 실패:', error.message);
+    }
+    setInterval(saveCosmicCloudState, 5000);
+
+    // 로그인/로그아웃/계정 전환 시, 그 계정(또는 게스트)의 진행 데이터로 완전히 맞춰준다.
+    // 이번 브라우저 세션에서 이미 같은 상태로 동기화했다면 다시 실행하지 않는다
+    // (그래야 순수 게스트가 새로고침할 때마다 불필요하게 리로드되지 않는다).
+    async function syncCosmicSaveOnAuthChange(newUserId) {
+      const syncedKey = 'cosmic_synced_uid';
+      const lastSynced = sessionStorage.getItem(syncedKey);
+      const newVal = newUserId || 'guest';
+
+      if (lastSynced === null) {
+        sessionStorage.setItem(syncedKey, newVal);
+        if (!newUserId) return; // 이번 세션 첫 로드가 순수 게스트면 로컬 데이터 그대로 사용
+      } else if (lastSynced === newVal) {
+        return; // 이전과 상태가 같으면 아무 것도 안 함
+      } else {
+        sessionStorage.setItem(syncedKey, newVal);
+      }
+
+      if (newUserId) {
+        const { data, error } = await sb.from('cosmic_save').select('data').eq('user_id', newUserId).maybeSingle();
+        if (!error && data && data.data && Object.keys(data.data).length > 0) {
+          COSMIC_PROGRESSION_KEYS.forEach(k => {
+            if (data.data[k] != null) localStorage.setItem(k, data.data[k]);
+            else localStorage.removeItem(k);
+          });
+        } else {
+          // 이 계정은 클라우드 저장 기록이 없는 신규 계정 -> 완전히 0부터 시작
+          COSMIC_PROGRESSION_KEYS.forEach(k => localStorage.removeItem(k));
+        }
+      } else {
+        // 로그아웃 -> 게스트 기본값으로 완전히 초기화
+        COSMIC_PROGRESSION_KEYS.forEach(k => localStorage.removeItem(k));
+      }
+      location.reload();
+    }
 
     function updateRankSubmitUI() {
       [
