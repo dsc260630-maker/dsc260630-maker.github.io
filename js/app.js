@@ -45,11 +45,13 @@ const GAME_SLUGS = {
 // DSC 오리지널 게임은 /play/ 래퍼(샌드박스 iframe)를 거치지 않고 독립 페이지로 직접 연결한다
 const STANDALONE_GAME_URLS = {
   '코스믹 머지 : 블랙홀의 위엄': 'cosmic-merge/index.html',
+  'DSC 리듬 (개발 중)': 'rhythm/index.html',
 };
 
 // DSC 오리지널 게임은 기본 게임들의 라인 아이콘 대신, 게임 내 좌상단 로고 이미지를 컬러 썸네일로 사용한다
 const ORIGINAL_THUMBNAILS = {
   '코스믹 머지 : 블랙홀의 위엄': 'cosmic-merge/assets/blackhole_logo.jpg',
+  'DSC 리듬 (개발 중)': 'rhythm/index.png',
 };
 
 const GAME_ICONS = {
